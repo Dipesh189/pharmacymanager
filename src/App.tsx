@@ -33,72 +33,128 @@ type UserRole =
 
 function App() {
 
+  // =========================
+  // USER ROLE
+  // =========================
+
   const [userRole, setUserRole] =
     useState<UserRole | null>(() => {
 
       const accessToken =
-        localStorage.getItem("accessToken");
+        localStorage.getItem(
+          "accessToken"
+        );
 
       const savedUser =
-        localStorage.getItem("user");
+        localStorage.getItem(
+          "user"
+        );
 
-      if (!accessToken || !savedUser) {
+
+      if (
+        !accessToken ||
+        !savedUser
+      ) {
         return null;
       }
+
 
       try {
 
         const user =
-          JSON.parse(savedUser);
+          JSON.parse(
+            savedUser
+          );
+
 
         const accessLevel =
-          user.access_level?.toLowerCase();
+          user.access_level
+            ?.toLowerCase();
 
 
-        if (accessLevel === "admin") {
+        if (
+          accessLevel === "admin"
+        ) {
           return "admin";
         }
 
-        if (accessLevel === "manager") {
+
+        if (
+          accessLevel === "manager"
+        ) {
           return "manager";
         }
 
-        if (accessLevel === "staff") {
+
+        if (
+          accessLevel === "staff"
+        ) {
           return "staff";
         }
 
-        if (accessLevel === "branch") {
+
+        if (
+          accessLevel === "branch"
+        ) {
           return "branch";
         }
 
+
         return null;
+
 
       } catch {
 
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("user");
+        localStorage.removeItem(
+          "accessToken"
+        );
+
+        localStorage.removeItem(
+          "refreshToken"
+        );
+
+        localStorage.removeItem(
+          "user"
+        );
+
 
         return null;
+
       }
 
     });
 
 
+  // =========================
+  // LOGOUT
+  // =========================
+
   const handleLogout = () => {
 
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("user");
+    localStorage.removeItem(
+      "accessToken"
+    );
+
+    localStorage.removeItem(
+      "refreshToken"
+    );
+
+    localStorage.removeItem(
+      "user"
+    );
+
 
     setUserRole(null);
+
   };
 
 
   return (
+
     <BrowserRouter>
 
       <Routes>
+
 
         {/* =========================
             LOGIN
@@ -110,8 +166,11 @@ function App() {
             userRole === null ? (
 
               <Login
-                onLoginSuccess={(role) =>
-                  setUserRole(role)
+                onLoginSuccess={
+                  (role) =>
+                    setUserRole(
+                      role
+                    )
                 }
               />
 
@@ -120,12 +179,15 @@ function App() {
               <Navigate
                 to={
                   userRole === "admin"
+
                     ? "/admin/dashboard"
 
                     : userRole === "manager"
+
                     ? "/manager/dashboard"
 
                     : userRole === "staff"
+
                     ? "/staff/dashboard"
 
                     : "/branch/dashboard"
@@ -148,9 +210,13 @@ function App() {
             userRole === "admin" ? (
 
               <AdminDashboardLayout
-                onLogout={handleLogout}
+                onLogout={
+                  handleLogout
+                }
               >
+
                 <AdminDashboard />
+
               </AdminDashboardLayout>
 
             ) : (
@@ -175,9 +241,13 @@ function App() {
             userRole === "manager" ? (
 
               <ManagerDashboardLayout
-                onLogout={handleLogout}
+                onLogout={
+                  handleLogout
+                }
               >
+
                 <ManagerDashboard />
+
               </ManagerDashboardLayout>
 
             ) : (
@@ -197,14 +267,16 @@ function App() {
            ========================= */}
 
         <Route
-          path="/staff/dashboard"
+          path="/staff/*"
           element={
             userRole === "staff" ? (
 
               <StaffDashboardLayout>
 
                 <StaffDashboard
-                  onLogout={handleLogout}
+                  onLogout={
+                    handleLogout
+                  }
                 />
 
               </StaffDashboardLayout>
@@ -234,28 +306,45 @@ function App() {
 
                 <Routes>
 
+
+                  {/* BRANCH DASHBOARD */}
+
                   <Route
                     path="dashboard"
                     element={
                       <BranchDashboard
-                        onLogout={handleLogout}
+                        onLogout={
+                          handleLogout
+                        }
                       />
                     }
                   />
 
 
-                  {branchRoutes.map(
-                    (route) => (
+                  {/* BRANCH ROUTES */}
 
-                      <Route
-                        key={route.path}
-                        path={route.path}
-                        element={route.element}
-                      />
+                  {
+                    branchRoutes.map(
+                      (route) => (
 
+                        <Route
+                          key={
+                            route.path
+                          }
+                          path={
+                            route.path
+                          }
+                          element={
+                            route.element
+                          }
+                        />
+
+                      )
                     )
-                  )}
+                  }
 
+
+                  {/* UNKNOWN BRANCH URL */}
 
                   <Route
                     path="*"
@@ -266,6 +355,7 @@ function App() {
                       />
                     }
                   />
+
 
                 </Routes>
 
@@ -312,10 +402,13 @@ function App() {
           }
         />
 
+
       </Routes>
 
     </BrowserRouter>
+
   );
+
 }
 
 

@@ -1,0 +1,409 @@
+/* =========================
+   ADD SOP PAGE
+   ========================= */
+
+.addSopPage {
+    grid-column: 1 / -1;
+
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: auto auto 1fr;
+
+    width: 100%;
+    min-width: 0;
+
+    background: var(--color-background);
+}
+
+
+/* =========================
+   HEADER
+   ========================= */
+
+.header {
+    grid-column: 1 / -1;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: var(--space-2);
+
+    padding: var(--space-fluid-md);
+
+    background: var(--color-primary);
+
+    color: var(--color-text-light);
+}
+
+
+.header h1 {
+    margin: 0;
+
+    font-size: var(--font-xl);
+    font-weight: var(--font-semibold);
+
+    line-height: 1.2;
+
+    color: var(--color-text-light);
+}
+
+
+.header p {
+    margin: 6px 0 0;
+
+    font-size: var(--font-sm);
+
+    color: var(--color-text-light);
+
+    opacity: 0.9;
+}
+
+
+/* =========================
+   BACK BUTTON
+   ========================= */
+
+.backButton {
+    flex-shrink: 0;
+
+    min-height: 42px;
+
+    padding: 10px var(--space-2);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+
+    background: var(--color-surface);
+
+    color: var(--color-primary);
+
+    font-size: var(--font-sm);
+    font-weight: var(--font-semibold);
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.backButton:hover {
+    background: var(--color-primary-light);
+
+    color: var(--color-primary-dark);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   ACTION BAR
+   ========================= */
+
+.actionContainer {
+    grid-column: 1 / -1;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: var(--space-1);
+
+    padding: var(--space-1);
+
+    background: var(--color-surface);
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+/* =========================
+   BUTTONS
+   ========================= */
+
+.uploadButton,
+.deleteButton {
+    min-height: 44px;
+
+    padding: 10px var(--space-2);
+
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-sm);
+    font-weight: var(--font-semibold);
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* =========================
+   UPLOAD
+   ========================= */
+
+.uploadButton {
+    border: 1px solid var(--color-primary);
+
+    background: var(--color-primary);
+
+    color: var(--color-text-light);
+}
+
+
+.uploadButton:hover {
+    background: var(--color-primary-dark);
+
+    border-color: var(--color-primary-dark);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   DELETE
+   ========================= */
+
+.deleteButton {
+    border: 1px solid #dc2626;
+
+    background: var(--color-surface);
+
+    color: #dc2626;
+}
+
+
+.deleteButton:hover {
+    background: #dc2626;
+
+    border-color: #dc2626;
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   MAIN CONTENT
+   ========================= */
+
+.content {
+    grid-column: 1 / -1;
+
+    min-width: 0;
+
+    padding: var(--space-1);
+
+    background: var(--color-background);
+}
+
+
+/* =========================
+   SOP DOCUMENT AREA
+   ========================= */
+
+.emptyState {
+    width: 100%;
+    min-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: var(--space-1);
+
+    padding: var(--space-fluid-lg);
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    text-align: center;
+}
+
+
+.emptyState h2 {
+    margin: 0;
+
+    font-size: var(--font-lg);
+    font-weight: var(--font-semibold);
+
+    color: var(--color-text);
+}
+
+
+.emptyState p {
+    margin: 0;
+
+    font-size: var(--font-sm);
+
+    color: var(--color-text-muted);
+}
+
+
+/* =========================
+   FUTURE FORM SECTION
+   ========================= */
+
+.uploadSection {
+    grid-column: span 4;
+
+    min-width: 0;
+
+    padding: var(--space-2);
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+
+/* =========================
+   FUTURE SOP LIST
+   ========================= */
+
+.sopList {
+    grid-column: span 8;
+
+    min-width: 0;
+
+    padding: var(--space-2);
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+
+/* =========================
+   TABLET
+   ========================= */
+
+@media (max-width: 1199px) {
+
+    .uploadSection {
+        grid-column: span 5;
+    }
+
+
+    .sopList {
+        grid-column: span 7;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 767px) {
+
+    .header {
+        padding: var(--space-2);
+    }
+
+
+    .header h1 {
+        font-size: var(--font-lg);
+    }
+
+
+    .header p {
+        font-size: var(--font-xs);
+    }
+
+
+    .backButton {
+        min-height: 38px;
+
+        padding: 8px 12px;
+
+        font-size: var(--font-xs);
+    }
+
+
+    .actionContainer {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .uploadButton,
+    .deleteButton {
+        width: 100%;
+
+        padding: 8px;
+
+        font-size: var(--font-xs);
+    }
+
+
+    .uploadSection,
+    .sopList {
+        grid-column: 1 / -1;
+    }
+
+
+    .content {
+        padding: var(--space-1);
+    }
+
+
+    .emptyState {
+        min-height: 240px;
+
+        padding: var(--space-2);
+    }
+
+
+    .emptyState h2 {
+        font-size: var(--font-md);
+    }
+
+
+    .emptyState p {
+        font-size: var(--font-xs);
+    }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+   ========================= */
+
+@media (max-width: 480px) {
+
+    .header {
+        align-items: flex-start;
+
+        gap: var(--space-1);
+    }
+
+
+    .actionContainer {
+        grid-template-columns: 1fr;
+    }
+
+
+    .uploadButton,
+    .deleteButton {
+        width: 100%;
+    }
+
+}
