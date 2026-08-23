@@ -1,0 +1,65 @@
+.dashboardLayout {
+    min-height: 100vh;
+
+    background: var(--color-background);
+}
+
+.dashboardMain {
+    min-height: 100vh;
+
+    margin-left: 256px;
+
+    transition: margin-left 0.2s ease;
+}
+
+.dashboardContent {
+    width: 100%;
+    max-width: 1600px;
+
+    margin: 0 auto;
+
+    padding: var(--space-4);
+}
+
+
+/* =========================
+   TABLET
+   768px - 1199px
+   ========================= */
+
+@media (max-width: 1199px) {
+    .dashboardMain {
+        margin-left: 88px;
+    }
+
+    .dashboardContent {
+        padding: var(--space-3);
+    }
+}
+
+
+/* =========================
+   MOBILE
+   below 768px
+   ========================= */
+
+@media (max-width: 767px) {
+    .dashboardMain {
+        margin-left: 0;
+    }
+
+    .dashboardContent {
+        padding: var(--space-2);
+    }
+}
+
+
+/* =========================
+   SMALL MOBILE
+   ========================= */
+
+@media (max-width: 480px) {
+    .dashboardContent {
+        padding: var(--space-2) var(--space-1);
+    }
+}

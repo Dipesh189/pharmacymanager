@@ -1,0 +1,106 @@
+.dailyServices {
+    grid-column: 1 / -1;
+
+    width: 100%;
+    padding: var(--space-fluid-lg);
+}
+
+/* =========================
+   HEADING
+   ========================= */
+
+.dailyServices h1 {
+    margin: 0 0 var(--space-fluid-lg);
+
+    color: var(--color-text);
+    font-size: var(--font-fluid-xl);
+}
+
+
+/* =========================
+   FORM
+   ========================= */
+
+.form {
+    display: grid;
+
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+
+    gap: var(--space-fluid-md);
+
+    width: 100%;
+}
+
+
+/* Each input takes 6 columns */
+.form>* {
+    grid-column: span 6;
+
+    min-width: 0;
+}
+
+
+/* =========================
+   SUBMIT BUTTON
+   ========================= */
+
+.submitButton {
+    grid-column: 1 / -1;
+
+    min-height: 48px;
+
+    padding: var(--space-sm) var(--space-md);
+
+    border: none;
+    border-radius: var(--radius-sm);
+
+    background: var(--color-primary);
+    color: var(--color-text-light);
+
+    font: inherit;
+    font-weight: var(--font-semibold);
+
+    cursor: pointer;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.1s ease;
+}
+
+.submitButton:hover {
+    opacity: 0.9;
+}
+
+.submitButton:active {
+    transform: scale(0.99);
+}
+
+.submitButton:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 767px) {
+
+    .dailyServices {
+        padding: var(--space-fluid-md);
+    }
+
+    .dailyServices h1 {
+        margin-bottom: var(--space-fluid-md);
+    }
+
+    .form {
+        gap: var(--space-fluid-md);
+    }
+
+    /* Inputs take full row */
+    .form>* {
+        grid-column: 1 / -1;
+    }
+}

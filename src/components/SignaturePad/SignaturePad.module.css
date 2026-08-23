@@ -1,0 +1,71 @@
+.signatureContainer {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--space-1);
+}
+
+
+.signatureBox {
+    width: 100%;
+
+    height: 200px;
+
+    overflow: hidden;
+
+    background: var(--color-surface);
+
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+
+.signatureCanvas {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    cursor: crosshair;
+}
+
+
+.signatureActions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+.clearButton {
+    padding: 8px 16px;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+
+    background: var(--color-surface);
+
+    color: var(--color-text);
+
+    font-size: var(--font-sm);
+    font-weight: var(--font-medium);
+
+    cursor: pointer;
+}
+
+
+.clearButton:hover {
+    background: var(--color-primary-light);
+
+    color: var(--color-primary);
+}
+
+
+@media (max-width: 767px) {
+
+    .signatureBox {
+        height: 160px;
+    }
+
+}

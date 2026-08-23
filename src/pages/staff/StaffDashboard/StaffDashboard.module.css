@@ -1,0 +1,624 @@
+/* =========================
+   HEADER
+   ========================= */
+
+.staffHeader {
+    grid-column: 1 / -1;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: var(--space-2);
+
+    padding: var(--space-fluid-md);
+
+
+    background: var(--color-primary);
+
+
+
+
+
+}
+
+
+.staffDetails {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--space-1);
+}
+
+
+.staffDetails h1 {
+    margin: 0;
+
+    font-size: var(--font-xl);
+    font-weight: var(--font-semibold);
+
+    color: var(--color-text-light);
+
+    line-height: 1.2;
+}
+
+
+.staffMeta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: var(--space-1);
+
+    font-size: var(--font-sm);
+
+    color: var(--color-text-muted);
+}
+
+
+.staffMeta span:first-child {
+    padding: 4px 10px;
+
+    background: var(--color-primary-light);
+
+    border-radius: 999px;
+
+    color: var(--color-primary);
+
+    font-weight: var(--font-medium);
+}
+
+
+.divider {
+    color: var(--color-text-light);
+}
+
+.staffMeta span:last-child {
+    color: var(--color-text-light);
+}
+
+
+
+
+/* =========================
+   LOGOUT BUTTON
+   ========================= */
+
+.logoutButton {
+    flex-shrink: 0;
+
+    padding: 10px var(--space-2);
+
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-sm);
+
+    background: var(--color-danger-light);
+
+    color: var(--color-danger);
+
+    font-size: var(--font-sm);
+    font-weight: var(--font-semibold);
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.logoutButton:hover {
+    background: var(--color-danger);
+    color: var(--color-text-light);
+
+    border-color: var(--color-danger);
+
+    transform: translateY(-1px);
+}
+
+
+
+/* =========================
+   NAVIGATION
+   ========================= */
+
+.staffNavigation {
+    grid-column: 1 / -1;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, minmax(0, 1fr));
+
+    gap: var(--space-1);
+
+    padding: var(--space-1);
+
+    background: var(--color-surface);
+
+}
+
+
+.navButton {
+    min-height: 48px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: var(--space-fluid-md);
+
+    border-radius: var(--radius-md);
+
+    text-decoration: none;
+
+    text-align: center;
+
+    font-size: var(--font-sm);
+    font-weight: var(--font-medium);
+
+    color: var(--color-text-light);
+
+    background: var(--color-primary);
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.navButton:hover {
+    background: var(--color-primary-dark);
+
+    color: var(--color-text-light);
+
+    transform: translateY(-1px);
+}
+
+
+.navButton.active {
+    background: var(--color-primary);
+
+    color: var(--color-text-light);
+
+    font-weight: var(--font-semibold);
+}
+
+
+
+/* =========================
+   TIMESHEET
+   ========================= */
+
+.timesheet {
+    grid-column: 1 / -1;
+
+    min-width: 0;
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-md);
+
+    overflow: hidden;
+}
+
+
+.timesheetHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: var(--space-2);
+
+    padding: var(--space-fluid-md);
+
+    border-bottom: 1px solid var(--color-border);
+
+    background:
+        linear-gradient(135deg,
+            var(--color-surface),
+            var(--color-primary-light));
+}
+
+
+.timesheetHeader h2 {
+    margin: 0 0 4px;
+
+    font-size: var(--font-lg);
+    font-weight: var(--font-semibold);
+
+    color: var(--color-text);
+}
+
+
+.timesheetHeader p {
+    margin: 0;
+
+    font-size: var(--font-sm);
+
+    color: var(--color-text-muted);
+}
+
+
+
+/* =========================
+   MONTH NAVIGATION
+   ========================= */
+
+.monthNavigation {
+    display: flex;
+    align-items: center;
+
+    gap: var(--space-1);
+}
+
+
+.monthYear {
+    min-width: 140px;
+
+    text-align: center;
+
+    padding: 10px 14px;
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+
+    color: var(--color-primary-dark);
+
+    font-size: var(--font-sm);
+    font-weight: var(--font-semibold);
+}
+
+
+.monthButton {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: var(--radius-sm);
+
+    background: var(--color-primary);
+
+    color: var(--color-text-light);
+
+    font-size: var(--font-xl);
+    font-weight: var(--font-semibold);
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.monthButton:hover {
+    background: var(--color-primary-dark);
+
+    transform: translateY(-1px);
+}
+
+/* =========================
+   TABLE WRAPPER
+   ========================= */
+
+.tableContainer {
+    width: 100%;
+    overflow: hidden;
+}
+
+
+/* =========================
+   TABLE
+   ========================= */
+
+.timesheetTable {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+
+/* =========================
+   5 COLUMN WIDTHS
+   TOTAL = 100%
+   ========================= */
+
+/* Date */
+.timesheetTable th:nth-child(1),
+.timesheetTable td:nth-child(1) {
+    width: 22%;
+}
+
+/* Time */
+.timesheetTable th:nth-child(2),
+.timesheetTable td:nth-child(2) {
+    width: 28%;
+}
+
+/* Break */
+.timesheetTable th:nth-child(3),
+.timesheetTable td:nth-child(3) {
+    width: 13%;
+}
+
+/* Total Time */
+.timesheetTable th:nth-child(4),
+.timesheetTable td:nth-child(4) {
+    width: 16%;
+}
+
+/* Status */
+.timesheetTable th:nth-child(5),
+.timesheetTable td:nth-child(5) {
+    width: 21%;
+}
+
+
+.timesheetTable thead {
+    background: var(--color-primary-light);
+}
+
+
+.timesheetTable th {
+    padding: 14px 12px;
+
+    text-align: left;
+
+    border-bottom: 1px solid var(--color-border);
+
+    color: var(--color-primary-dark);
+
+    font-size: var(--font-xs);
+    font-weight: var(--font-semibold);
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.04em;
+}
+
+
+.timesheetTable td {
+    padding: var(--space-2) 12px;
+
+    border-bottom: 1px solid var(--color-border);
+
+    color: var(--color-text);
+
+    font-size: var(--font-sm);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+
+.timesheetTable td span {
+    display: inline-block;
+
+    padding: 6px 10px;
+
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-xs);
+    font-weight: var(--font-semibold);
+
+
+}
+
+/* Sick */
+.statusSick {
+    background: #eab308;
+    color: var(--color-primary-dark);
+    border: 1px solid #eab308;
+}
+
+
+/* Holiday */
+.statusHoliday {
+    background: #16a34a;
+    color: white;
+    border: 1px solid #16a34a;
+}
+
+
+/* Everything else */
+.statusDefault {
+    background: red;
+    color: var(--color-primary-light);
+    border: 1px solid var(--color-border);
+}
+
+
+.timesheetTable tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+
+.timesheetTable tbody tr:hover {
+    background: var(--color-primary-light);
+}
+
+
+.timesheetTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* =========================
+   TOTAL ROW
+   ========================= */
+
+.totalRow {
+    background: var(--color-primary-light);
+}
+
+
+.totalRow td {
+    border-top: 2px solid var(--color-primary);
+
+    border-bottom: none;
+
+    color: var(--color-primary-dark);
+
+    font-weight: var(--font-bold);
+}
+
+
+.totalRow td:first-child {
+    text-transform: uppercase;
+
+    letter-spacing: 0.03em;
+}
+
+
+/* =========================
+   TABLET
+   ========================= */
+
+@media (max-width: 1199px) {
+
+    .staffNavigation {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+}
+
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 767px) {
+
+    .staffHeader {
+        padding: var(--space-2);
+    }
+
+
+    .staffDetails h1 {
+        font-size: var(--font-lg);
+    }
+
+
+    .staffMeta {
+        font-size: var(--font-xs);
+    }
+
+
+    .logoutButton {
+        padding: 8px 12px;
+
+        font-size: var(--font-xs);
+    }
+
+
+    .staffNavigation {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .navButton {
+        min-height: 44px;
+
+        padding: 8px;
+
+        font-size: var(--font-xs);
+    }
+
+
+    .timesheetHeader {
+        padding: var(--space-2);
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: var(--space-2);
+    }
+
+
+    .timesheetTable th {
+        padding: 10px 6px;
+
+        font-size: 10px;
+    }
+
+
+    .timesheetTable td {
+        padding: 12px 6px;
+
+        font-size: var(--font-xs);
+    }
+
+    .monthNavigation {
+        width: 100%;
+    }
+
+
+    .monthYear {
+        flex: 1;
+
+        min-width: 0;
+    }
+
+
+    .monthButton {
+        width: 38px;
+        height: 38px;
+
+        flex-shrink: 0;
+    }
+}
+
+
+
+/* =========================
+   SMALL MOBILE
+   ========================= */
+
+@media (max-width: 480px) {
+
+    .staffHeader {
+        align-items: flex-start;
+
+        gap: var(--space-1);
+    }
+
+
+    .staffMeta {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 4px;
+    }
+
+
+    .divider {
+        display: none;
+    }
+
+
+    .logoutButton {
+        padding: 8px 10px;
+    }
+
+
+    .staffNavigation {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}

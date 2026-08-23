@@ -1,0 +1,107 @@
+.orderContainer {
+    grid-column: 1 / -1;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding: var(--space-fluid-sm);
+
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: auto 1fr auto;
+
+    gap: var(--space-fluid-sm);
+    position: relative;
+}
+
+.tableHeader {
+    grid-column: 1 / -1;
+
+    font-size: var(--font-fluid-md);
+    font-weight: var(--font-semibold);
+
+    text-align: center;
+
+    padding: var(--space-fluid-md);
+}
+
+.tableContainer {
+    grid-column: 1 / -1;
+
+    width: 100%;
+    height: 100%;
+    padding: var(--space-fluid-xxl);
+    min-width: 0;
+    min-height: 0;
+
+    overflow: auto;
+}
+
+.tableContainer table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: var(--font-fluid-md);
+    color: var(--color-text);
+}
+
+.tableContainer thead {
+    background: var(--color-background);
+}
+
+.tableContainer thead th {
+    padding: var(--space-fluid-sm);
+
+    border-bottom: 2px solid var(--color-border);
+
+    text-align: left;
+
+    font-size: var(--font-sm);
+    font-weight: var(--font-semibold);
+
+    white-space: nowrap;
+}
+
+.tableContainer tbody td {
+    padding: var(--space-fluid-sm);
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.tableContainer input {
+    width: 100%;
+    max-width: 120px;
+}
+
+.tableContainer table tbody tr td input {
+    width: calc(16px 1.5vw 32px);
+}
+
+.orderContainer>button {
+    grid-column: 1 / -1;
+
+    min-height: 48px;
+
+    border: none;
+    border-radius: var(--radius-sm);
+
+    background: var(--color-primary);
+    color: var(--color-text-light);
+
+    font-weight: var(--font-semibold);
+
+    cursor: pointer;
+
+
+
+}
+
+@media (max-width: 768px) {
+    .tableContainer {
+        padding: var(--space-fluid-sm);
+    }
+}
