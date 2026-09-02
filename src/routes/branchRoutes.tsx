@@ -2,7 +2,7 @@ import SOP from "../pages/branch/SOP/SOP";
 import Order from "../pages/branch/Order/Order";
 import DailyServices from "../pages/branch/DailyServices/DailyServices";
 import EndOfMonth from "../pages/branch/EndOfMonth/EndOfMonth";
-import CDBalanceCheck from "../pages/branch/CDBalanceCheck/CDBalanceCheck";
+
 
 export const branchRoutes = [
   {
@@ -25,9 +25,5 @@ export const branchRoutes = [
     path: "end-of-month",
     element: <EndOfMonth />,
   },
-  {
-    title: "CD Balance Check",
-    path: "cd-balance-check",
-    element: <CDBalanceCheck />,
-  },
+  
 ];

@@ -1,0 +1,185 @@
+.sopPage {
+    width: 100%;
+    min-width: 0;
+
+    background: var(--color-surface);
+}
+
+
+.header {
+    padding: var(--space-fluid-md);
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+.header h2 {
+    margin: 0;
+
+    font-size: var(--font-xl);
+    font-weight: var(--font-semibold);
+
+    color: var(--color-text);
+}
+
+
+.header p {
+    margin: 4px 0 0;
+
+    font-size: var(--font-sm);
+
+    color: var(--color-text-muted);
+}
+
+
+.error {
+    padding: var(--space-1);
+
+    background: #fef2f2;
+
+    color: #b91c1c;
+}
+
+
+.message,
+.noRecords {
+    padding: var(--space-3);
+
+    text-align: center;
+}
+
+
+.tableContainer {
+    width: 100%;
+
+    overflow: hidden;
+}
+
+
+.sopTable {
+    width: 100%;
+
+    table-layout: fixed;
+
+    border-collapse: collapse;
+}
+
+
+.sopTable th,
+.sopTable td {
+    padding: 12px;
+
+    border-bottom: 1px solid var(--color-border);
+
+    text-align: center;
+}
+
+
+.sopTable th {
+    background: var(--color-primary-light);
+
+    color: var(--color-primary-dark);
+
+    font-size: var(--font-xs);
+    font-weight: var(--font-semibold);
+
+    text-transform: uppercase;
+}
+
+
+.sopTable td {
+    font-size: var(--font-sm);
+}
+
+
+.sopTable th:nth-child(1),
+.sopTable td:nth-child(1) {
+    width: 18%;
+}
+
+
+.sopTable th:nth-child(2),
+.sopTable td:nth-child(2) {
+    width: 47%;
+}
+
+
+.sopTable th:nth-child(3),
+.sopTable td:nth-child(3) {
+    width: 20%;
+}
+
+
+.sopTable th:nth-child(4),
+.sopTable td:nth-child(4) {
+    width: 15%;
+}
+
+
+.viewButton {
+    display: inline-block;
+
+    padding: 7px 12px;
+
+    border-radius: var(--radius-sm);
+
+    background: var(--color-primary);
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: var(--font-xs);
+    font-weight: var(--font-semibold);
+}
+
+
+.viewButton:hover {
+    background: var(--color-primary-dark);
+}
+
+
+@media (max-width: 767px) {
+
+    .sopTable th,
+    .sopTable td {
+        padding: 8px 3px;
+
+        font-size: 10px;
+    }
+
+
+    .sopTable th:nth-child(1),
+    .sopTable td:nth-child(1) {
+        width: 19%;
+    }
+
+
+    .sopTable th:nth-child(2),
+    .sopTable td:nth-child(2) {
+        width: 43%;
+    }
+
+
+    .sopTable th:nth-child(3),
+    .sopTable td:nth-child(3) {
+        width: 20%;
+    }
+
+
+    .sopTable th:nth-child(4),
+    .sopTable td:nth-child(4) {
+        width: 18%;
+    }
+
+
+    .sopTable td {
+        overflow-wrap: anywhere;
+    }
+
+
+    .viewButton {
+        padding: 6px;
+    }
+
+}

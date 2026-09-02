@@ -1,4 +1,5 @@
-const API_URL = "http://127.0.0.1:8000/data_makans";
+const API_BASE_URL =
+  "http://127.0.0.1:8000/data_makans";
 
 
 export const apiFetch = async (
@@ -7,47 +8,111 @@ export const apiFetch = async (
 ) => {
 
   let accessToken =
-    localStorage.getItem("accessToken");
+    localStorage.getItem(
+      "accessToken"
+    );
+
+  const refreshToken =
+    localStorage.getItem(
+      "refreshToken"
+    );
 
 
-  let response = await fetch(
-    `${API_URL}${url}`,
-    {
-      ...options,
+  const makeRequest = async (
+    token: string | null
+  ) => {
 
-      headers: {
-        ...options.headers,
-
-        "Content-Type": "application/json",
-
-        Authorization:
-          `Bearer ${accessToken}`,
-      },
-    }
-  );
+    const headers =
+      new Headers(
+        options.headers
+      );
 
 
-  // Access token expired / invalid
-  if (response.status === 401) {
+    // =========================
+    // JWT
+    // =========================
 
-    const refreshToken =
-      localStorage.getItem("refreshToken");
+    if (token) {
 
+      headers.set(
+        "Authorization",
+        `Bearer ${token}`
+      );
 
-    if (!refreshToken) {
-
-      localStorage.clear();
-
-      window.location.href = "/login";
-
-      return response;
     }
 
 
-    // Try to get a new access token
+    // =========================
+    // CONTENT TYPE
+    // =========================
+
+    const isFormData =
+      options.body instanceof FormData;
+
+
+    // Normal JSON body
+    if (
+      options.body &&
+      !isFormData
+    ) {
+
+      headers.set(
+        "Content-Type",
+        "application/json"
+      );
+
+    }
+
+
+    // File upload
+    // Browser sets multipart/form-data
+    // automatically with boundary
+    if (isFormData) {
+
+      headers.delete(
+        "Content-Type"
+      );
+
+    }
+
+
+    // =========================
+    // REQUEST
+    // =========================
+
+    return fetch(
+      `${API_BASE_URL}${url}`,
+      {
+        ...options,
+        headers,
+      }
+    );
+
+  };
+
+
+  // =========================
+  // FIRST REQUEST
+  // =========================
+
+  let response =
+    await makeRequest(
+      accessToken
+    );
+
+
+  // =========================
+  // ACCESS TOKEN EXPIRED
+  // =========================
+
+  if (
+    response.status === 401 &&
+    refreshToken
+  ) {
+
     const refreshResponse =
       await fetch(
-        `${API_URL}/makans_token/refresh/`,
+        `${API_BASE_URL}/makans_token/refresh/`,
         {
           method: "POST",
 
@@ -57,57 +122,66 @@ export const apiFetch = async (
           },
 
           body: JSON.stringify({
-            refresh: refreshToken,
+            refresh:
+              refreshToken,
           }),
         }
       );
 
 
-    if (!refreshResponse.ok) {
+    // =========================
+    // REFRESH SUCCESS
+    // =========================
 
-      localStorage.clear();
+    if (refreshResponse.ok) {
 
-      window.location.href = "/login";
+      const refreshData =
+        await refreshResponse.json();
 
-      return response;
+
+      accessToken =
+        refreshData.access;
+
+
+      localStorage.setItem(
+        "accessToken",
+        refreshData.access
+      );
+
+
+      // Retry original request
+      response =
+        await makeRequest(
+          accessToken
+        );
+
+    } else {
+
+      // =========================
+      // REFRESH FAILED
+      // =========================
+
+      localStorage.removeItem(
+        "accessToken"
+      );
+
+      localStorage.removeItem(
+        "refreshToken"
+      );
+
+      localStorage.removeItem(
+        "user"
+      );
+
+
+      window.location.href =
+        "/login";
+
     }
-
-
-    const refreshData =
-      await refreshResponse.json();
-
-
-    // Save new access token
-    localStorage.setItem(
-      "accessToken",
-      refreshData.access
-    );
-
-
-    accessToken =
-      refreshData.access;
-
-
-    // Repeat original request
-    response = await fetch(
-      `${API_URL}${url}`,
-      {
-        ...options,
-
-        headers: {
-          ...options.headers,
-
-          "Content-Type":
-            "application/json",
-
-          Authorization:
-            `Bearer ${accessToken}`,
-        },
-      }
-    );
 
   }
 
 
   return response;
+
 };

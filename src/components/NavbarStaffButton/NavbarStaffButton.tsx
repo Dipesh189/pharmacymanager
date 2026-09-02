@@ -47,7 +47,7 @@ const NavbarStaffButton =  ({ onLogout }: NavbarStaffButtonProps)  => {
         <StatCard title="Order" />
         <StatCard title="Daily Services" />
         <StatCard title="End Of Month" />
-        <StatCard title="CD Balance Check" />
+        
        <button
           type="button"
           className={style.navbarButtonBranchContainer}

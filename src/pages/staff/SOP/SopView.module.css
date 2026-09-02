@@ -1,0 +1,460 @@
+/* =========================
+   SOP VIEW PAGE
+   ========================= */
+
+.sopViewPage {
+    width: 100%;
+    min-width: 0;
+
+    background: var(--color-background);
+}
+
+
+/* =========================
+   HEADER
+   ========================= */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: var(--space-2);
+
+    padding: var(--space-fluid-md);
+
+    background: var(--color-primary);
+
+    color: var(--color-text-light);
+}
+
+
+.header>div {
+    min-width: 0;
+}
+
+
+.header h2 {
+    margin: 0;
+
+    font-size: var(--font-xl);
+    font-weight: var(--font-semibold);
+
+    color: var(--color-text-light);
+
+    line-height: 1.25;
+}
+
+
+.header p {
+    margin: 4px 0 0;
+
+    font-size: var(--font-sm);
+
+    color: var(--color-text-light);
+
+    opacity: 0.9;
+}
+
+
+/* =========================
+   BACK BUTTON
+   ========================= */
+
+.backButton {
+    flex-shrink: 0;
+
+    min-height: 40px;
+
+    padding: 8px 14px;
+
+    border: none;
+    border-radius: var(--radius-sm);
+
+    background: var(--color-surface);
+
+    color: var(--color-primary);
+
+    font-size: var(--font-sm);
+    font-weight: var(--font-medium);
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.backButton:hover {
+    background: var(--color-primary-light);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   ERROR
+   ========================= */
+
+.error {
+    width: 100%;
+
+    padding: var(--space-1);
+
+    background: #fef2f2;
+
+    color: #b91c1c;
+
+    border-bottom: 1px solid #fecaca;
+
+    font-size: var(--font-sm);
+}
+
+
+/* =========================
+   SUCCESS
+   ========================= */
+
+.success {
+    width: 100%;
+
+    padding: var(--space-1);
+
+    background: #f0fdf4;
+
+    color: #166534;
+
+    border-bottom: 1px solid #bbf7d0;
+
+    font-size: var(--font-sm);
+}
+
+
+/* =========================
+   PDF AREA
+   ========================= */
+
+.pdfContainer {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    justify-content: center;
+
+    padding: var(--space-2);
+
+    background: #e5e7eb;
+
+    overflow-x: auto;
+}
+
+
+/* =========================
+   REACT PDF DOCUMENT
+   ========================= */
+
+.pdfContainer :global(.react-pdf__Document) {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: var(--space-2);
+}
+
+
+/* =========================
+   PDF PAGE
+   ========================= */
+
+.pdfPage {
+    width: auto;
+    max-width: 100%;
+
+    background: #ffffff;
+
+    box-shadow: var(--shadow-md);
+}
+
+
+/* React PDF creates a canvas */
+
+.pdfPage canvas {
+    display: block;
+
+    max-width: 100%;
+
+    height: auto !important;
+}
+
+
+/* Remove unnecessary page spacing */
+
+.pdfPage :global(.react-pdf__Page__canvas) {
+    display: block;
+
+    max-width: 100%;
+
+    height: auto !important;
+}
+
+
+/* =========================
+   SIGNATURE
+   ========================= */
+
+.signatureSection {
+    width: calc(100% - (var(--space-1) * 2));
+
+    margin: var(--space-1);
+
+    padding: var(--space-fluid-md);
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+
+.signatureSection h3 {
+    margin: 0 0 4px;
+
+    font-size: var(--font-lg);
+    font-weight: var(--font-semibold);
+
+    color: var(--color-text);
+}
+
+
+.signatureSection p {
+    margin: 0 0 var(--space-2);
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-sm);
+}
+
+
+/* =========================
+   SAVE BUTTON
+   ========================= */
+
+.saveButton {
+    width: 100%;
+
+    min-height: 44px;
+
+    margin-top: var(--space-2);
+
+    padding: 10px var(--space-2);
+
+    border: none;
+    border-radius: var(--radius-sm);
+
+    background: var(--color-primary);
+
+    color: var(--color-text-light);
+
+    font-size: var(--font-sm);
+    font-weight: var(--font-semibold);
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.saveButton:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+
+    transform: translateY(-1px);
+}
+
+
+.saveButton:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   LOADING / MESSAGE
+   ========================= */
+
+.message {
+    width: 100%;
+
+    padding: var(--space-3);
+
+    text-align: center;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-sm);
+}
+
+
+/* =========================
+   TABLET
+   ========================= */
+
+@media (max-width: 1199px) {
+
+    .pdfContainer {
+        padding: var(--space-1);
+    }
+
+
+    .pdfPage {
+        max-width: 100%;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 767px) {
+
+    .header {
+        align-items: flex-start;
+
+        padding: var(--space-2);
+
+        gap: var(--space-1);
+    }
+
+
+    .header h2 {
+        font-size: var(--font-md);
+
+        overflow-wrap: anywhere;
+    }
+
+
+    .header p {
+        font-size: var(--font-xs);
+    }
+
+
+    .backButton {
+        min-height: 36px;
+
+        padding: 7px 9px;
+
+        font-size: var(--font-xs);
+    }
+
+
+    /* =========================
+       PDF MOBILE
+       ========================= */
+
+    .pdfContainer {
+        width: 100%;
+
+        padding: 4px;
+
+        overflow-x: hidden;
+    }
+
+
+    .pdfContainer :global(.react-pdf__Document) {
+        width: 100%;
+
+        gap: 6px;
+    }
+
+
+    .pdfPage {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        box-shadow: none;
+    }
+
+
+    .pdfPage canvas {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        height: auto !important;
+    }
+
+
+    .pdfPage :global(.react-pdf__Page__canvas) {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        height: auto !important;
+    }
+
+
+    /* =========================
+       SIGNATURE MOBILE
+       ========================= */
+
+    .signatureSection {
+        width: calc(100% - 8px);
+
+        margin: 4px;
+
+        padding: var(--space-1);
+    }
+
+
+    .signatureSection h3 {
+        font-size: var(--font-md);
+    }
+
+
+    .signatureSection p {
+        font-size: var(--font-xs);
+    }
+
+
+    .saveButton {
+        min-height: 42px;
+
+        font-size: var(--font-sm);
+    }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+   ========================= */
+
+@media (max-width: 480px) {
+
+    .header {
+        flex-direction: column;
+    }
+
+
+    .backButton {
+        width: 100%;
+    }
+
+
+    .pdfContainer {
+        padding: 2px;
+    }
+
+
+    .signatureSection {
+        width: calc(100% - 4px);
+
+        margin: 2px;
+    }
+
+}

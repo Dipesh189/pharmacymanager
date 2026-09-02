@@ -1,5 +1,5 @@
 /* =========================
-   ADD SOP PAGE
+   PAGE
    ========================= */
 
 .addSopPage {
@@ -40,38 +40,43 @@
 .header h1 {
     margin: 0;
 
+    color: var(--color-text-light);
+
     font-size: var(--font-xl);
     font-weight: var(--font-semibold);
 
     line-height: 1.2;
-
-    color: var(--color-text-light);
 }
 
 
 .header p {
     margin: 6px 0 0;
 
-    font-size: var(--font-sm);
-
     color: var(--color-text-light);
+
+    font-size: var(--font-sm);
 
     opacity: 0.9;
 }
 
 
 /* =========================
-   BACK BUTTON
+   FILE UPLOAD
    ========================= */
 
-.backButton {
+.fileInput {
+    display: none;
+}
+
+
+.uploadButton {
     flex-shrink: 0;
 
     min-height: 42px;
 
     padding: 10px var(--space-2);
 
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-text-light);
     border-radius: var(--radius-sm);
 
     background: var(--color-surface);
@@ -90,7 +95,7 @@
 }
 
 
-.backButton:hover {
+.uploadButton:hover:not(:disabled) {
     background: var(--color-primary-light);
 
     color: var(--color-primary-dark);
@@ -99,41 +104,397 @@
 }
 
 
-/* =========================
-   ACTION BAR
-   ========================= */
+.uploadButton:disabled {
+    opacity: 0.6;
 
-.actionContainer {
-    grid-column: 1 / -1;
+    cursor: not-allowed;
 
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    gap: var(--space-1);
-
-    padding: var(--space-1);
-
-    background: var(--color-surface);
-
-    border-bottom: 1px solid var(--color-border);
+    transform: none;
 }
 
 
 /* =========================
-   BUTTONS
+   MESSAGES
    ========================= */
 
-.uploadButton,
-.deleteButton {
-    min-height: 44px;
+.errorMessage {
+    grid-column: 1 / -1;
 
     padding: 10px var(--space-2);
 
-    border-radius: var(--radius-sm);
+    border-bottom: 1px solid #fecaca;
+
+    background: #fef2f2;
+
+    color: #b91c1c;
 
     font-size: var(--font-sm);
+}
+
+
+.successMessage {
+    grid-column: 1 / -1;
+
+    padding: 10px var(--space-2);
+
+    border-bottom: 1px solid #86efac;
+
+    background: #f0fdf4;
+
+    color: #166534;
+
+    font-size: var(--font-sm);
+    font-weight: var(--font-medium);
+}
+
+
+.message {
+    width: 100%;
+
+    padding: var(--space-3);
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-sm);
+
+    text-align: center;
+}
+
+
+/* =========================
+   CONTENT
+   ========================= */
+
+.content {
+    grid-column: 1 / -1;
+
+    width: 100%;
+    min-width: 0;
+
+    background: var(--color-surface);
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   EMPTY STATE
+   ========================= */
+
+.emptyState {
+    width: 100%;
+    min-height: 260px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: var(--space-1);
+
+    padding: var(--space-fluid-lg);
+
+    text-align: center;
+}
+
+
+.emptyState h2 {
+    margin: 0;
+
+    color: var(--color-text);
+
+    font-size: var(--font-lg);
     font-weight: var(--font-semibold);
+}
+
+
+.emptyState p {
+    margin: 0;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-sm);
+}
+
+
+/* =========================
+   TABLE
+   ========================= */
+
+.tableContainer {
+    width: 100%;
+    min-width: 0;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+
+.sopTable {
+    width: 100%;
+    min-width: 850px;
+
+    table-layout: fixed;
+
+    border-collapse: collapse;
+
+    background: var(--color-surface);
+}
+
+
+.sopTable thead {
+    background: var(--color-primary-light);
+}
+
+
+.sopTable th {
+    padding: 14px 12px;
+
+    border-bottom: 1px solid var(--color-border);
+
+    color: var(--color-primary-dark);
+
+    font-size: var(--font-xs);
+    font-weight: var(--font-semibold);
+
+    letter-spacing: 0.04em;
+
+    text-align: center;
+    text-transform: uppercase;
+}
+
+
+.sopTable td {
+    padding: 12px;
+
+    border-bottom: 1px solid var(--color-border);
+
+    color: var(--color-text);
+
+    font-size: var(--font-sm);
+
+    text-align: center;
+    vertical-align: middle;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.sopTable tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+
+.sopTable tbody tr:hover {
+    background: var(--color-primary-light);
+}
+
+
+.sopTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================
+   COLUMN WIDTHS
+   ========================= */
+
+/* ID */
+
+.sopTable th:nth-child(1),
+.sopTable td:nth-child(1) {
+    width: 8%;
+}
+
+
+/* TITLE */
+
+.sopTable th:nth-child(2),
+.sopTable td:nth-child(2) {
+    width: 26%;
+}
+
+
+/* CATEGORY */
+
+.sopTable th:nth-child(3),
+.sopTable td:nth-child(3) {
+    width: 28%;
+}
+
+
+/* ACCESS ROLE */
+
+.sopTable th:nth-child(4),
+.sopTable td:nth-child(4) {
+    width: 28%;
+}
+
+
+/* REMOVE */
+
+.sopTable th:nth-child(5),
+.sopTable td:nth-child(5) {
+    width: 10%;
+}
+
+
+.sopTable td:nth-child(1) {
+    white-space: nowrap;
+}
+
+
+.sopTable td:nth-child(2) {
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+
+    line-height: 1.4;
+}
+
+
+.sopTable td:nth-child(3),
+.sopTable td:nth-child(4) {
+    white-space: normal;
+}
+
+
+/* =========================
+   CATEGORY / ROLE TAGS
+   ========================= */
+
+.tagContainer {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 6px;
+}
+
+
+.tag {
+    max-width: 100%;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 5px 7px 5px 10px;
+
+    border: 1px solid var(--color-primary);
+    border-radius: 999px;
+
+    background: var(--color-primary-light);
+
+    color: var(--color-primary-dark);
+
+    font-size: var(--font-xs);
+    font-weight: var(--font-medium);
+
+    line-height: 1.2;
+}
+
+
+.tag>span {
+    min-width: 0;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   REMOVE TAG BUTTON
+   ========================= */
+
+.removeTagButton {
+    width: 18px;
+    height: 18px;
+
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #dc2626;
+
+    font-family: inherit;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.removeTagButton:hover:not(:disabled) {
+    background: #fee2e2;
+
+    color: #991b1b;
+
+    transform: scale(1.08);
+}
+
+
+.removeTagButton:focus-visible {
+    outline: 2px solid #dc2626;
+
+    outline-offset: 2px;
+}
+
+
+/* =========================
+   ADD TAG BUTTON
+   ========================= */
+
+.addTagButton {
+    width: 28px;
+    height: 28px;
+
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px dashed var(--color-primary);
+    border-radius: 50%;
+
+    background: var(--color-surface);
+
+    color: var(--color-primary);
+
+    font-family: inherit;
+
+    font-size: 20px;
+    font-weight: var(--font-semibold);
+
+    line-height: 1;
 
     cursor: pointer;
 
@@ -145,11 +506,493 @@
 }
 
 
+.addTagButton:hover:not(:disabled) {
+    border-style: solid;
+
+    background: var(--color-primary);
+
+    color: var(--color-text-light);
+
+    transform: scale(1.06);
+}
+
+
+.addTagButton:focus-visible {
+    outline: 2px solid var(--color-primary);
+
+    outline-offset: 2px;
+}
+
+
+.addTagButton:disabled,
+.removeTagButton:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
 /* =========================
-   UPLOAD
+   DELETE SOP BUTTON
    ========================= */
 
-.uploadButton {
+.deleteButton {
+    min-height: 36px;
+
+    padding: 7px 10px;
+
+    border: 1px solid #dc2626;
+    border-radius: var(--radius-sm);
+
+    background: var(--color-surface);
+
+    color: #dc2626;
+
+    font-size: var(--font-xs);
+    font-weight: var(--font-semibold);
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.deleteButton:hover:not(:disabled) {
+    background: #dc2626;
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+}
+
+
+.deleteButton:focus-visible {
+    outline: 2px solid #dc2626;
+
+    outline-offset: 2px;
+}
+
+
+.deleteButton:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* =========================
+   MODAL OVERLAY
+   ========================= */
+
+.modalOverlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgb(15 23 42 / 55%);
+
+    backdrop-filter: blur(2px);
+}
+
+
+/* =========================
+   MODAL
+   ========================= */
+
+.modal {
+    width: min(100%, 520px);
+
+    max-height: min(700px, 90vh);
+
+    display: grid;
+
+    /*
+       HEADER
+       ADD CATEGORY
+       OPTIONS
+       ACTIONS
+    */
+    grid-template-rows:
+        auto auto minmax(0, 1fr) auto;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-sm);
+
+    background: var(--color-surface);
+
+    box-shadow:
+        0 20px 50px rgb(15 23 42 / 25%);
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   MODAL HEADER
+   ========================= */
+
+.modalHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding: 18px 20px;
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+.modalHeader h2 {
+    margin: 0;
+
+    color: var(--color-text);
+
+    font-size: var(--font-lg);
+    font-weight: var(--font-semibold);
+}
+
+
+.modalHeader p {
+    margin: 5px 0 0;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-sm);
+}
+
+
+/* =========================
+   CLOSE MODAL BUTTON
+   ========================= */
+
+.closeModalButton {
+    width: 32px;
+    height: 32px;
+
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: var(--color-text-muted);
+
+    font-family: inherit;
+
+    font-size: 24px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.closeModalButton:hover:not(:disabled) {
+    background: var(--color-primary-light);
+
+    color: var(--color-primary-dark);
+}
+
+
+.closeModalButton:focus-visible {
+    outline: 2px solid var(--color-primary);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================
+   ADD NEW CATEGORY
+   ========================= */
+
+.addCategoryBox {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 14px 20px;
+
+    border-bottom: 1px solid var(--color-border);
+
+    background: var(--color-background);
+}
+
+
+.categoryInput {
+    flex: 1;
+
+    min-width: 0;
+    min-height: 40px;
+
+    padding: 8px 11px;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-sm);
+
+    background: var(--color-surface);
+
+    color: var(--color-text);
+
+    font-family: inherit;
+
+    font-size: var(--font-sm);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.categoryInput::placeholder {
+    color: var(--color-text-muted);
+}
+
+
+.categoryInput:focus {
+    outline: none;
+
+    border-color: var(--color-primary);
+
+    box-shadow:
+        0 0 0 2px var(--color-primary-light);
+}
+
+
+.categoryInput:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+
+.addCategoryButton {
+    min-height: 40px;
+
+    flex-shrink: 0;
+
+    padding: 8px 14px;
+
+    border: 1px solid var(--color-primary);
+
+    border-radius: var(--radius-sm);
+
+    background: var(--color-primary);
+
+    color: var(--color-text-light);
+
+    font-family: inherit;
+
+    font-size: var(--font-sm);
+    font-weight: var(--font-semibold);
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.addCategoryButton:hover:not(:disabled) {
+    border-color: var(--color-primary-dark);
+
+    background: var(--color-primary-dark);
+
+    transform: translateY(-1px);
+}
+
+
+.addCategoryButton:focus-visible {
+    outline: 2px solid var(--color-primary);
+
+    outline-offset: 2px;
+}
+
+
+.addCategoryButton:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* =========================
+   MODAL OPTION LIST
+   ========================= */
+
+.optionList {
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    padding: 16px 20px;
+
+    overflow-y: auto;
+}
+
+
+.optionItem {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 11px 12px;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-sm);
+
+    background: var(--color-surface);
+
+    color: var(--color-text);
+
+    font-size: var(--font-sm);
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+.optionItem:hover {
+    border-color: var(--color-primary);
+
+    background: var(--color-primary-light);
+}
+
+
+.optionItem:has(input:checked) {
+    border-color: var(--color-primary);
+
+    background: var(--color-primary-light);
+}
+
+
+.optionItem input {
+    width: 18px;
+    height: 18px;
+
+    flex-shrink: 0;
+
+    margin: 0;
+
+    accent-color: var(--color-primary);
+
+    cursor: pointer;
+}
+
+
+.optionItem span {
+    min-width: 0;
+
+    overflow-wrap: anywhere;
+}
+
+
+.modalMessage {
+    margin: 0;
+
+    padding: 30px 10px;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-sm);
+
+    text-align: center;
+}
+
+
+/* =========================
+   MODAL ACTIONS
+   ========================= */
+
+.modalActions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding: 14px 20px;
+
+    border-top: 1px solid var(--color-border);
+
+    background: var(--color-surface);
+}
+
+
+.cancelButton,
+.saveButton {
+    min-height: 40px;
+
+    padding: 8px 18px;
+
+    border-radius: var(--radius-sm);
+
+    font-family: inherit;
+
+    font-size: var(--font-sm);
+    font-weight: var(--font-semibold);
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.cancelButton {
+    border: 1px solid var(--color-border);
+
+    background: var(--color-surface);
+
+    color: var(--color-text);
+}
+
+
+.saveButton {
     border: 1px solid var(--color-primary);
 
     background: var(--color-primary);
@@ -158,132 +1001,24 @@
 }
 
 
-.uploadButton:hover {
-    background: var(--color-primary-dark);
-
-    border-color: var(--color-primary-dark);
-
-    transform: translateY(-1px);
-}
-
-
-/* =========================
-   DELETE
-   ========================= */
-
-.deleteButton {
-    border: 1px solid #dc2626;
-
-    background: var(--color-surface);
-
-    color: #dc2626;
-}
-
-
-.deleteButton:hover {
-    background: #dc2626;
-
-    border-color: #dc2626;
-
-    color: #ffffff;
-
-    transform: translateY(-1px);
-}
-
-
-/* =========================
-   MAIN CONTENT
-   ========================= */
-
-.content {
-    grid-column: 1 / -1;
-
-    min-width: 0;
-
-    padding: var(--space-1);
-
+.cancelButton:hover:not(:disabled) {
     background: var(--color-background);
 }
 
 
-/* =========================
-   SOP DOCUMENT AREA
-   ========================= */
+.saveButton:hover:not(:disabled) {
+    border-color: var(--color-primary-dark);
 
-.emptyState {
-    width: 100%;
-    min-height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    gap: var(--space-1);
-
-    padding: var(--space-fluid-lg);
-
-    background: var(--color-surface);
-
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-
-    text-align: center;
+    background: var(--color-primary-dark);
 }
 
 
-.emptyState h2 {
-    margin: 0;
+.cancelButton:disabled,
+.saveButton:disabled,
+.closeModalButton:disabled {
+    opacity: 0.5;
 
-    font-size: var(--font-lg);
-    font-weight: var(--font-semibold);
-
-    color: var(--color-text);
-}
-
-
-.emptyState p {
-    margin: 0;
-
-    font-size: var(--font-sm);
-
-    color: var(--color-text-muted);
-}
-
-
-/* =========================
-   FUTURE FORM SECTION
-   ========================= */
-
-.uploadSection {
-    grid-column: span 4;
-
-    min-width: 0;
-
-    padding: var(--space-2);
-
-    background: var(--color-surface);
-
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-}
-
-
-/* =========================
-   FUTURE SOP LIST
-   ========================= */
-
-.sopList {
-    grid-column: span 8;
-
-    min-width: 0;
-
-    padding: var(--space-2);
-
-    background: var(--color-surface);
-
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    cursor: not-allowed;
 }
 
 
@@ -293,13 +1028,38 @@
 
 @media (max-width: 1199px) {
 
-    .uploadSection {
-        grid-column: span 5;
+    .sopTable {
+        min-width: 800px;
     }
 
 
-    .sopList {
-        grid-column: span 7;
+    .sopTable th:nth-child(1),
+    .sopTable td:nth-child(1) {
+        width: 8%;
+    }
+
+
+    .sopTable th:nth-child(2),
+    .sopTable td:nth-child(2) {
+        width: 24%;
+    }
+
+
+    .sopTable th:nth-child(3),
+    .sopTable td:nth-child(3) {
+        width: 28%;
+    }
+
+
+    .sopTable th:nth-child(4),
+    .sopTable td:nth-child(4) {
+        width: 28%;
+    }
+
+
+    .sopTable th:nth-child(5),
+    .sopTable td:nth-child(5) {
+        width: 12%;
     }
 
 }
@@ -313,6 +1073,8 @@
 
     .header {
         padding: var(--space-2);
+
+        gap: var(--space-1);
     }
 
 
@@ -326,58 +1088,127 @@
     }
 
 
-    .backButton {
+    .uploadButton {
         min-height: 38px;
 
-        padding: 8px 12px;
+        padding: 8px 10px;
 
         font-size: var(--font-xs);
     }
 
 
-    .actionContainer {
-        display: grid;
-
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+    .sopTable {
+        min-width: 760px;
     }
 
 
-    .uploadButton,
+    .sopTable th {
+        padding: 8px 4px;
+
+        font-size: 9px;
+
+        letter-spacing: 0;
+    }
+
+
+    .sopTable td {
+        padding: 8px 4px;
+
+        font-size: 10px;
+    }
+
+
+    .sopTable th:nth-child(1),
+    .sopTable td:nth-child(1) {
+        width: 8%;
+    }
+
+
+    .sopTable th:nth-child(2),
+    .sopTable td:nth-child(2) {
+        width: 24%;
+    }
+
+
+    .sopTable th:nth-child(3),
+    .sopTable td:nth-child(3) {
+        width: 28%;
+    }
+
+
+    .sopTable th:nth-child(4),
+    .sopTable td:nth-child(4) {
+        width: 28%;
+    }
+
+
+    .sopTable th:nth-child(5),
+    .sopTable td:nth-child(5) {
+        width: 12%;
+    }
+
+
+    .tagContainer {
+        gap: 4px;
+    }
+
+
+    .tag {
+        gap: 3px;
+
+        padding: 4px 5px 4px 7px;
+
+        font-size: 9px;
+    }
+
+
+    .removeTagButton {
+        width: 16px;
+        height: 16px;
+
+        font-size: 14px;
+    }
+
+
+    .addTagButton {
+        width: 24px;
+        height: 24px;
+
+        font-size: 17px;
+    }
+
+
     .deleteButton {
         width: 100%;
 
-        padding: 8px;
+        min-height: 30px;
 
-        font-size: var(--font-xs);
+        padding: 5px 3px;
+
+        font-size: 9px;
     }
 
 
-    .uploadSection,
-    .sopList {
-        grid-column: 1 / -1;
+    /* NEW CATEGORY */
+
+    .addCategoryBox {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 8px;
+
+        padding: 12px 14px;
     }
 
 
-    .content {
-        padding: var(--space-1);
+    .categoryInput {
+        width: 100%;
     }
 
 
-    .emptyState {
-        min-height: 240px;
-
-        padding: var(--space-2);
-    }
-
-
-    .emptyState h2 {
-        font-size: var(--font-md);
-    }
-
-
-    .emptyState p {
-        font-size: var(--font-xs);
+    .addCategoryButton {
+        width: 100%;
     }
 
 }
@@ -391,18 +1222,135 @@
 
     .header {
         align-items: flex-start;
-
-        gap: var(--space-1);
     }
 
 
-    .actionContainer {
-        grid-template-columns: 1fr;
+    .header>div:first-child {
+        min-width: 0;
     }
 
 
-    .uploadButton,
-    .deleteButton {
+    .uploadButton {
+        flex-shrink: 0;
+    }
+
+
+    .sopTable {
+        min-width: 720px;
+    }
+
+
+    .sopTable th {
+        padding: 7px 2px;
+
+        font-size: 8px;
+    }
+
+
+    .sopTable td {
+        padding: 7px 3px;
+
+        font-size: 9px;
+    }
+
+
+    .sopTable th:nth-child(1),
+    .sopTable td:nth-child(1) {
+        width: 8%;
+    }
+
+
+    .sopTable th:nth-child(2),
+    .sopTable td:nth-child(2) {
+        width: 23%;
+    }
+
+
+    .sopTable th:nth-child(3),
+    .sopTable td:nth-child(3) {
+        width: 29%;
+    }
+
+
+    .sopTable th:nth-child(4),
+    .sopTable td:nth-child(4) {
+        width: 29%;
+    }
+
+
+    .sopTable th:nth-child(5),
+    .sopTable td:nth-child(5) {
+        width: 11%;
+    }
+
+
+    .tag {
+        max-width: 120px;
+    }
+
+
+    /* =========================
+       MOBILE MODAL
+       ========================= */
+
+    .modalOverlay {
+        align-items: flex-end;
+
+        padding: 0;
+    }
+
+
+    .modal {
+        width: 100%;
+
+        max-height: 88vh;
+
+        border-right: none;
+        border-bottom: none;
+        border-left: none;
+
+        border-radius:
+            var(--radius-sm) var(--radius-sm) 0 0;
+    }
+
+
+    .modalHeader,
+    .addCategoryBox,
+    .optionList,
+    .modalActions {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+
+    .modalHeader {
+        padding-top: 14px;
+        padding-bottom: 14px;
+    }
+
+
+    .addCategoryBox {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+
+    .optionList {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+
+    .modalActions {
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+
+    .cancelButton,
+    .saveButton {
         width: 100%;
     }
 

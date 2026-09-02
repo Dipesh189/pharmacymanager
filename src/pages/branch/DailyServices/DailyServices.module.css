@@ -29,12 +29,13 @@
     gap: var(--space-fluid-md);
 
     width: 100%;
+    padding: var(--space-fluid-lg);
 }
 
 
 /* Each input takes 6 columns */
 .form>* {
-    grid-column: span 6;
+    grid-column: span 12;
 
     min-width: 0;
 }
