@@ -17,21 +17,30 @@ import AddSop from "../AddSop/AddSop";
 import Sop from "../SOP/Sop";
 import SopView from "../SOP/SopView";
 import Holiday from "../Holiday/Holiday";
+import SickLeave from "../SickLeave/SickLeave";
 
 import styles from "./StaffDashboard.module.css";
-import SickLeave from "../SickLeave/SickLeave";
+import EmergencyLeave from "../EmergencyLeave/EmergencyLeave";
+
 
 type StaffDashboardProps = {
   onLogout: () => void;
 };
 
+
 type HolidaySummary = {
-  holiday_allowance: number;
   holiday_taken: number;
   holiday_left: number;
+  holiday_hours: string;
+  holiday_hours_left: string;
+
   sick_taken: number;
+  sick_hours: string;
+
   unpaid_taken: number;
+  unpaid_hours: string;
 };
+
 
 type SavedUser = {
   first_name?: string;
@@ -40,9 +49,11 @@ type SavedUser = {
   branch_name?: string;
 };
 
+
 const StaffDashboard = ({
   onLogout,
 }: StaffDashboardProps) => {
+
   // =========================
   // LOGGED-IN USER
   // =========================
@@ -50,34 +61,50 @@ const StaffDashboard = ({
   const savedUser =
     localStorage.getItem("user");
 
+
   let firstName = "";
   let lastName = "";
   let position = "";
   let branchName = "";
 
+
   if (savedUser) {
+
     try {
+
       const user: SavedUser =
-        JSON.parse(savedUser);
+        JSON.parse(
+          savedUser
+        );
+
 
       firstName =
         user.first_name ?? "";
 
+
       lastName =
         user.last_name ?? "";
+
 
       position =
         user.position ?? "";
 
+
       branchName =
         user.branch_name ?? "";
+
+
     } catch (error) {
+
       console.error(
         "Unable to read user:",
         error
       );
+
     }
+
   }
+
 
   // =========================
   // ADD SOP PERMISSION
@@ -92,6 +119,7 @@ const StaffDashboard = ({
       .toLowerCase()
   );
 
+
   // =========================
   // HOLIDAY SUMMARY
   // =========================
@@ -100,68 +128,123 @@ const StaffDashboard = ({
     holidaySummary,
     setHolidaySummary,
   ] = useState<HolidaySummary>({
-    holiday_allowance: 28,
+
     holiday_taken: 0,
-    holiday_left: 28,
+    holiday_left: 0,
+
+    holiday_hours:
+      "00:00",
+
+    holiday_hours_left:
+      "00:00",
+
     sick_taken: 0,
+
+    sick_hours:
+      "00:00",
+
     unpaid_taken: 0,
+
+    unpaid_hours:
+      "00:00",
+
   });
+
 
   // =========================
   // FETCH HOLIDAY SUMMARY
   // =========================
 
   useEffect(() => {
+
     const fetchHolidaySummary =
       async () => {
+
         try {
+
           const response =
             await apiFetch(
-              "/staff/holiday/"
+              "/staff/holiday/",
+              {
+                method: "GET",
+              }
             );
+
 
           const data =
             await response.json();
 
+
           if (!response.ok) {
+
             console.error(
               "Holiday error:",
               data
             );
 
             return;
+
           }
 
+
           setHolidaySummary({
-            holiday_allowance:
-              data.holiday_allowance ??
-              28,
 
             holiday_taken:
-              data.holiday_taken ?? 0,
+              data.holiday_taken ??
+              0,
 
             holiday_left:
-              data.holiday_left ?? 28,
+              data.holiday_left ??
+              0,
+
+            holiday_hours:
+              data.holiday_hours ??
+              "00:00",
+
+            holiday_hours_left:
+              data.holiday_hours_left ??
+              "00:00",
 
             sick_taken:
-              data.sick_taken ?? 0,
+              data.sick_taken ??
+              0,
+
+            sick_hours:
+              data.sick_hours ??
+              "00:00",
 
             unpaid_taken:
-              data.unpaid_taken ?? 0,
+              data.unpaid_taken ??
+              0,
+
+            unpaid_hours:
+              data.unpaid_hours ??
+              "00:00",
+
           });
+
+
         } catch (error) {
+
           console.error(
             "Unable to load holiday summary:",
             error
           );
+
         }
+
       };
 
+
     fetchHolidaySummary();
+
   }, []);
 
+
   return (
+
     <>
+
       {/* =========================
           HEADER
          ========================= */}
@@ -171,23 +254,28 @@ const StaffDashboard = ({
           styles.staffHeader
         }
       >
+
         <div
           className={
             styles.staffDetails
           }
         >
+
           <h1>
             {firstName} {lastName}
           </h1>
+
 
           <div
             className={
               styles.staffMeta
             }
           >
+
             <span>
               {position || "Staff"}
             </span>
+
 
             <span
               className={
@@ -197,22 +285,30 @@ const StaffDashboard = ({
               |
             </span>
 
+
             <span>
               {branchName || "Branch"}
             </span>
+
           </div>
+
         </div>
+
 
         <button
           type="button"
           className={
             styles.logoutButton
           }
-          onClick={onLogout}
+          onClick={
+            onLogout
+          }
         >
           Logout
         </button>
+
       </header>
+
 
       {/* =========================
           NAVIGATION
@@ -223,7 +319,10 @@ const StaffDashboard = ({
           styles.staffNavigation
         }
       >
-        {/* HOLIDAY */}
+
+        {/* =========================
+            HOLIDAY
+           ========================= */}
 
         <NavLink
           to="/staff/holiday"
@@ -231,24 +330,59 @@ const StaffDashboard = ({
             styles.navButton
           }
         >
-          <div>Holiday</div>
 
           <div>
-            Taken{" "}
-            {
-              holidaySummary.holiday_taken
-            }{" "}
-            days
-            {" | "}
-            Left{" "}
-            {
-              holidaySummary.holiday_left
-            }{" "}
-            days
+            Holiday
           </div>
+
+
+          <div>
+
+            Taken{" "}
+
+            {
+              holidaySummary
+                .holiday_taken
+            }{" "}
+
+            days |{" "}
+
+            {
+              holidaySummary
+                .holiday_hours
+            }{" "}
+
+            hours
+
+          </div>
+
+
+          <div>
+
+            Left{" "}
+
+            {
+              holidaySummary
+                .holiday_left
+            }{" "}
+
+            days |{" "}
+
+            {
+              holidaySummary
+                .holiday_hours_left
+            }{" "}
+
+            hours
+
+          </div>
+
         </NavLink>
 
-        {/* SICK LEAVE */}
+
+        {/* =========================
+            SICK LEAVE
+           ========================= */}
 
         <NavLink
           to="/staff/sick-leave"
@@ -256,18 +390,38 @@ const StaffDashboard = ({
             styles.navButton
           }
         >
-          <div>Sick Leave</div>
 
           <div>
-            Taken{" "}
-            {
-              holidaySummary.sick_taken
-            }{" "}
-            days
+            Sick Leave
           </div>
+
+
+          <div>
+
+            Taken{" "}
+
+            {
+              holidaySummary
+                .sick_taken
+            }{" "}
+
+            days |{" "}
+
+            {
+              holidaySummary
+                .sick_hours
+            }{" "}
+
+            hours
+
+          </div>
+
         </NavLink>
 
-        {/* EMERGENCY / UNPAID */}
+
+        {/* =========================
+            EMERGENCY / UNPAID
+           ========================= */}
 
         <NavLink
           to="/staff/emergency-leave"
@@ -275,20 +429,38 @@ const StaffDashboard = ({
             styles.navButton
           }
         >
+
           <div>
             Emergency Leave
           </div>
 
+
           <div>
+
             Taken{" "}
+
             {
-              holidaySummary.unpaid_taken
+              holidaySummary
+                .unpaid_taken
             }{" "}
-            days
+
+            days |{" "}
+
+            {
+              holidaySummary
+                .unpaid_hours
+            }{" "}
+
+            hours
+
           </div>
+
         </NavLink>
 
-        {/* SOP */}
+
+        {/* =========================
+            SOP
+           ========================= */}
 
         <NavLink
           to="/staff/sop"
@@ -299,7 +471,10 @@ const StaffDashboard = ({
           SOP
         </NavLink>
 
-        {/* CERTIFICATE */}
+
+        {/* =========================
+            CERTIFICATE
+           ========================= */}
 
         <NavLink
           to="/staff/certificate"
@@ -310,7 +485,10 @@ const StaffDashboard = ({
           Certificate
         </NavLink>
 
-        {/* ADD NOTE */}
+
+        {/* =========================
+            ADD NOTE
+           ========================= */}
 
         <NavLink
           to="/staff/add-note"
@@ -321,21 +499,30 @@ const StaffDashboard = ({
           Add Note
         </NavLink>
 
-        {/* ADD SOP
-            ONLY ARTI AND DIPESHKUMAR */}
 
-        {canAddSop && (
-          <NavLink
-            to="/staff/addsop"
-            className={
-              styles.navButton
-            }
-          >
-            Add Sop
-          </NavLink>
-        )}
+        {/* =========================
+            ADD SOP
+           ========================= */}
 
-        {/* STOCK */}
+        {
+          canAddSop && (
+
+            <NavLink
+              to="/staff/addsop"
+              className={
+                styles.navButton
+              }
+            >
+              Add Sop
+            </NavLink>
+
+          )
+        }
+
+
+        {/* =========================
+            STOCK
+           ========================= */}
 
         <NavLink
           to="/staff/stock"
@@ -345,7 +532,9 @@ const StaffDashboard = ({
         >
           Stock
         </NavLink>
+
       </nav>
+
 
       {/* =========================
           STAFF CONTENT
@@ -356,70 +545,87 @@ const StaffDashboard = ({
           styles.staffContainer
         }
       >
+
         <Routes>
-          {/* =========================
-              DASHBOARD / TIMESHEET
-             ========================= */}
+
+          {/* DASHBOARD */}
 
           <Route
             path="dashboard"
-            element={<TimeSheet />}
+            element={
+              <TimeSheet />
+            }
           />
 
-          {/* =========================
-              STAFF SOP LIST
-             ========================= */}
+
+          {/* SOP LIST */}
 
           <Route
             path="sop"
-            element={<Sop />}
+            element={
+              <Sop />
+            }
           />
 
-          {/* =========================
-              SINGLE SOP PDF + SIGN
-             ========================= */}
+
+          {/* SINGLE SOP */}
 
           <Route
             path="sop/:sopId"
-            element={<SopView />}
+            element={
+              <SopView />
+            }
           />
 
-          {/* =========================
-              HOLIDAY
-             ========================= */}
+
+          {/* HOLIDAY */}
 
           <Route
             path="holiday"
-            element={<Holiday />}
+            element={
+              <Holiday />
+            }
           />
 
-           <Route
+
+          {/* SICK LEAVE */}
+
+          <Route
             path="sick-leave"
-            element={<SickLeave />}
+            element={
+              <SickLeave />
+            }
+          />
+          <Route 
+            path="emergency-leave"
+            element={
+              <EmergencyLeave />
+            }
           />
 
-          {/* =========================
-              ADD/MANAGE SOP
-              ONLY ARTI AND DIPESHKUMAR
-             ========================= */}
+
+          {/* ADD SOP */}
 
           <Route
             path="addsop"
             element={
               canAddSop ? (
+
                 <AddSop />
+
               ) : (
+
                 <Navigate
                   to="/staff/dashboard"
                   replace
                 />
+
               )
             }
           />
 
-          {/* =========================
-              UNKNOWN STAFF ROUTE
-             ========================= */}
+
+          {/* UNKNOWN ROUTE */}
 
           <Route
             path="*"
@@ -430,10 +636,16 @@ const StaffDashboard = ({
               />
             }
           />
+
         </Routes>
+
       </section>
+
     </>
+
   );
+
 };
+
 
 export default StaffDashboard;

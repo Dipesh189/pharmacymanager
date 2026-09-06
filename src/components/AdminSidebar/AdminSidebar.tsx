@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 import styles from "./AdminSidebar.module.css";
 
 type AdminSidebarProps = {
@@ -7,102 +9,134 @@ type AdminSidebarProps = {
 const Sidebar = ({
   onLogout,
 }: AdminSidebarProps) => {
+  const getNavLinkClass = ({
+    isActive,
+  }: {
+    isActive: boolean;
+  }) =>
+    `${styles.navLink} ${
+      isActive ? styles.active : ""
+    }`;
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.logo}>
-        <div className={styles.logoMark}>M</div>
+        <div className={styles.logoMark}>
+          M
+        </div>
+
         <span className={styles.logoText}>
           Makans Ltd
         </span>
       </div>
 
       <nav className={styles.nav}>
-        <a
-          href="#"
-          className={`${styles.navLink} ${styles.active}`}
+        <NavLink
+          to="/admin/branches"
+          className={getNavLinkClass}
         >
-          <span className={styles.icon}>▦</span>
+          <span className={styles.icon}>
+            ▦
+          </span>
+
           <span className={styles.linkText}>
             All Branch
           </span>
-        </a>
+        </NavLink>
 
-        <a
-          href="#"
-          className={styles.navLink}
+        <NavLink
+          to="/admin/time-sheet"
+          className={getNavLinkClass}
         >
-          <span className={styles.icon}>□</span>
+          <span className={styles.icon}>
+            □
+          </span>
+
           <span className={styles.linkText}>
             Time Sheet
           </span>
-        </a>
+        </NavLink>
 
-        <a
-          href="#"
-          className={styles.navLink}
+        <NavLink
+          to="/admin/rp-rota"
+          className={getNavLinkClass}
         >
-          <span className={styles.icon}>▣</span>
+          <span className={styles.icon}>
+            ▣
+          </span>
+
           <span className={styles.linkText}>
             RP Rota
           </span>
-        </a>
+        </NavLink>
 
-        <a
-          href="#"
-          className={styles.navLink}
+        <NavLink
+          to="/admin/rp-log"
+          className={getNavLinkClass}
         >
-          <span className={styles.icon}>▣</span>
+          <span className={styles.icon}>
+            ▣
+          </span>
+
           <span className={styles.linkText}>
             RP Log
           </span>
-        </a>
+        </NavLink>
 
-        <a
-          href="#"
-          className={styles.navLink}
+        <NavLink
+          to="/admin/holidays"
+          className={getNavLinkClass}
         >
-          <span className={styles.icon}>♙</span>
+          <span className={styles.icon}>
+            ♙
+          </span>
+
           <span className={styles.linkText}>
             Holidays
           </span>
-        </a>
+        </NavLink>
 
-        <a
-          href="#"
-          className={styles.navLink}
+        <NavLink
+          to="/admin/end-of-month"
+          className={getNavLinkClass}
         >
-          <span className={styles.icon}>▤</span>
+          <span className={styles.icon}>
+            ▤
+          </span>
+
           <span className={styles.linkText}>
             End Of Month
           </span>
-        </a>
+        </NavLink>
 
-        <a
-          href="#"
-          className={styles.navLink}
+        <NavLink
+          to="/admin/settings"
+          className={getNavLinkClass}
         >
-          <span className={styles.icon}>⚙</span>
+          <span className={styles.icon}>
+            ⚙
+          </span>
+
           <span className={styles.linkText}>
             Settings
           </span>
-        </a>
+        </NavLink>
       </nav>
 
-      <div className={styles.bottomSection} onClick={onLogout}>
-        
-         <div
-  className={styles.bottomSection}
-  onClick={onLogout}
->
-  <div className={styles.navLink}>
-    <span className={styles.icon}>↪</span>
+      <div className={styles.bottomSection}>
+        <button
+          type="button"
+          className={styles.navLink}
+          onClick={onLogout}
+        >
+          <span className={styles.icon}>
+            ↪
+          </span>
 
-    <span className={styles.linkText}>
-      Logout
-    </span>
-  </div>
-</div>
-        
+          <span className={styles.linkText}>
+            Logout
+          </span>
+        </button>
       </div>
     </aside>
   );

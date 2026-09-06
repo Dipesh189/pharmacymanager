@@ -1,23 +1,42 @@
 .dashboard {
     width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--space-3);
 }
 
-
 /* =========================
-   PAGE HEADER
+   FILTER CARD
    ========================= */
 
-.pageHeader {
+.filterCard {
+    width: 100%;
+
+    padding: var(--space-3);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface);
+
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, 0.04),
+        0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+.filterHeader {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
 
     gap: var(--space-2);
 
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-3);
 }
 
-.pageTitle {
+.filterTitle {
     margin: 0 0 var(--space-1);
 
     color: var(--color-text);
@@ -27,7 +46,7 @@
     font-weight: var(--font-bold);
 }
 
-.pageDescription {
+.filterDescription {
     margin: 0;
 
     color: var(--color-text-muted);
@@ -35,6 +54,198 @@
     font-size: var(--font-sm);
 }
 
+.selectedSummary {
+    padding: var(--space-1) var(--space-2);
+
+    border: 1px solid var(--color-primary);
+    border-radius: 999px;
+
+    background: var(--color-primary-light);
+
+    color: var(--color-primary-dark);
+
+    font-size: var(--font-sm);
+    font-weight: var(--font-semibold);
+
+    white-space: nowrap;
+}
+
+.filterContent {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 2fr) minmax(280px, 1fr);
+
+    align-items: end;
+
+    gap: var(--space-3);
+}
+
+.branchFilterGroup {
+    min-width: 0;
+}
+
+.filterGroupLabel {
+    margin: 0 0 var(--space-1);
+
+    color: var(--color-text);
+
+    font-size: var(--font-sm);
+    font-weight: var(--font-semibold);
+}
+
+.message {
+    margin: 0;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-sm);
+}
+
+.errorMessage {
+    color: #dc2626;
+}
+
+/* =========================
+   BRANCH LIST
+   ========================= */
+
+.branchesList {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    gap: var(--space-1);
+}
+
+.branchItem {
+    min-height: 40px;
+
+    padding: 0 var(--space-2);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+
+    background: var(--color-surface);
+
+    color: var(--color-text);
+
+    font-family: inherit;
+    font-size: var(--font-sm);
+    font-weight: var(--font-medium);
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.branchItem:hover {
+    background: var(--color-primary-light);
+    border-color: var(--color-primary);
+
+    transform: translateY(-1px);
+}
+
+.branchItem:focus-visible {
+    outline: none;
+
+    border-color: var(--color-primary);
+
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.branchItem.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+
+    color: var(--color-text-light);
+
+    box-shadow:
+        0 4px 12px rgba(37, 99, 235, 0.18);
+}
+
+/* =========================
+   DATE FILTERS
+   ========================= */
+
+.dateFilters {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: var(--space-2);
+}
+
+.selectGroup {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--space-1);
+}
+
+.selectLabel {
+    color: var(--color-text);
+
+    font-size: var(--font-sm);
+    font-weight: var(--font-semibold);
+}
+
+.selectInput {
+    width: 100%;
+    min-height: 42px;
+
+    padding:
+        0 var(--space-2);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+
+    background: var(--color-surface);
+
+    color: var(--color-text);
+
+    font-family: inherit;
+    font-size: var(--font-sm);
+
+    cursor: pointer;
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.selectInput:hover {
+    border-color: var(--color-primary);
+}
+
+.selectInput:focus {
+    border-color: var(--color-primary);
+
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.selectInput:disabled {
+    background: var(--color-background);
+
+    color: var(--color-text-muted);
+
+    cursor: not-allowed;
+}
 
 /* =========================
    BUTTONS
@@ -68,7 +279,8 @@
 
     transform: translateY(-1px);
 
-    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.18);
+    box-shadow:
+        0 6px 16px rgba(37, 99, 235, 0.18);
 }
 
 .primaryButton:active {
@@ -102,7 +314,6 @@
     border-color: var(--color-primary);
 }
 
-
 /* =========================
    STATS
    ========================= */
@@ -110,11 +321,10 @@
 .statsGrid {
     display: grid;
 
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
 
     gap: var(--space-3);
-
-    margin-bottom: var(--space-3);
 }
 
 .statCard {
@@ -166,7 +376,6 @@
     color: #dc2626;
 }
 
-
 /* =========================
    MAIN GRID
    ========================= */
@@ -174,13 +383,11 @@
 .mainGrid {
     display: grid;
 
-    grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+    grid-template-columns:
+        minmax(0, 2fr) minmax(280px, 1fr);
 
     gap: var(--space-3);
-
-    margin-bottom: var(--space-3);
 }
-
 
 /* =========================
    CARD
@@ -228,9 +435,8 @@
     font-size: 13px;
 }
 
-
 /* =========================
-   SELECT
+   GENERAL SELECT
    ========================= */
 
 .select {
@@ -246,7 +452,6 @@
     color: var(--color-text);
 
     outline: none;
-
     cursor: pointer;
 
     transition:
@@ -257,9 +462,9 @@
 .select:focus {
     border-color: var(--color-primary);
 
-    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, 0.1);
 }
-
 
 /* =========================
    CHART
@@ -301,7 +506,6 @@
     font-size: 13px;
 }
 
-
 /* =========================
    QUICK ACTIONS
    ========================= */
@@ -309,7 +513,8 @@
 .quickActions {
     display: grid;
 
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
 
     gap: var(--space-2);
 }
@@ -358,7 +563,6 @@
     transform: translateY(-1px);
 }
 
-
 /* =========================
    TABLE
    ========================= */
@@ -371,7 +575,6 @@
 
 .table {
     width: 100%;
-
     min-width: 720px;
 
     border-collapse: collapse;
@@ -381,7 +584,8 @@
 .table td {
     padding: var(--space-2);
 
-    border-bottom: 1px solid var(--color-border);
+    border-bottom:
+        1px solid var(--color-border);
 
     text-align: left;
 }
@@ -408,16 +612,15 @@
     background: var(--color-primary-light);
 }
 
-
 /* =========================
    STATUS
    ========================= */
 
 .status {
+    min-height: 24px;
+
     display: inline-flex;
     align-items: center;
-
-    min-height: 24px;
 
     padding: 0 var(--space-1);
 
@@ -442,14 +645,18 @@
     color: #991b1b;
 }
 
-
 /* =========================
    TABLET
    ========================= */
 
 @media (max-width: 1199px) {
+    .filterContent {
+        grid-template-columns: 1fr;
+    }
+
     .statsGrid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
     }
 
     .mainGrid {
@@ -461,42 +668,53 @@
     }
 }
 
-
 /* =========================
    MOBILE
    ========================= */
 
 @media (max-width: 767px) {
-    .pageHeader {
-        align-items: stretch;
-        flex-direction: column;
-
-        margin-bottom: var(--space-3);
+    .dashboard {
+        gap: var(--space-2);
     }
 
-    .primaryButton {
+    .filterCard,
+    .statCard,
+    .card {
+        padding: var(--space-2);
+
+        border-radius: var(--radius-sm);
+    }
+
+    .filterHeader {
+        flex-direction: column;
+    }
+
+    .selectedSummary {
+        white-space: normal;
+    }
+
+    .branchesList {
+        display: grid;
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .branchItem {
         width: 100%;
+    }
+
+    .dateFilters {
+        grid-template-columns: 1fr;
     }
 
     .statsGrid {
         grid-template-columns: 1fr;
 
         gap: var(--space-2);
-
-        margin-bottom: var(--space-2);
     }
 
     .mainGrid {
         gap: var(--space-2);
-
-        margin-bottom: var(--space-2);
-    }
-
-    .statCard,
-    .card {
-        padding: var(--space-2);
-
-        border-radius: var(--radius-sm);
     }
 
     .statValue {
@@ -531,5 +749,11 @@
         height: 240px;
 
         padding: var(--space-2);
+    }
+}
+
+@media (max-width: 420px) {
+    .branchesList {
+        grid-template-columns: 1fr;
     }
 }

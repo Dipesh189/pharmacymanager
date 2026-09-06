@@ -1,13 +1,13 @@
 import LeaveRequest from "../../../components/LeaveRequest/LeaveRequest";
 
 
-const SickLeave = () => {
+const EmergencyLeave = () => {
 
   return (
 
     <LeaveRequest
-      type="sick"
-      title="Sick Leave"
+      type="emergency"
+      title="Emergency Leave"
     />
 
   );
@@ -15,4 +15,4 @@ const SickLeave = () => {
 };
 
 
-export default SickLeave;
+export default EmergencyLeave;
