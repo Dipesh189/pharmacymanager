@@ -21,6 +21,7 @@ import SickLeave from "../SickLeave/SickLeave";
 
 import styles from "./StaffDashboard.module.css";
 import EmergencyLeave from "../EmergencyLeave/EmergencyLeave";
+import AddNote from "../AddNote/AddNote";
 
 
 type StaffDashboardProps = {
@@ -111,7 +112,7 @@ const StaffDashboard = ({
   // =========================
 
   const canAddSop = [
-    "arti",
+    "arti-kiren",
     "dipeshkumar",
   ].includes(
     firstName
@@ -239,6 +240,48 @@ const StaffDashboard = ({
     fetchHolidaySummary();
 
   }, []);
+
+  const handleStudy = async () => {
+  try {
+    const response = await apiFetch(
+      "/study-time-stamp/",
+      {
+        method: "POST",
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(
+        data.detail ||
+        "Unable to record study time."
+      );
+
+      return;
+    }
+
+    console.log(
+      "Study:",
+      data
+    );
+
+    alert(
+      data.detail ||
+      "Study time recorded successfully."
+    );
+
+  } catch (error) {
+    console.error(
+      "Study time error:",
+      error
+    );
+
+    alert(
+      "Unable to record study time."
+    );
+  }
+};
 
 
   return (
@@ -532,6 +575,12 @@ const StaffDashboard = ({
         >
           Stock
         </NavLink>
+        <div
+  className={styles.navButton}
+  onClick={handleStudy}
+>
+  Study
+</div>
 
       </nav>
 
@@ -602,7 +651,12 @@ const StaffDashboard = ({
               <EmergencyLeave />
             }
           />
-
+          <Route 
+            path="add-note"
+            element={
+              <AddNote />
+            }
+          />
 
           {/* ADD SOP */}
 

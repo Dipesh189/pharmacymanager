@@ -1,5 +1,5 @@
 const API_BASE_URL =
-  "http://127.0.0.1:8000/data_makans";
+  import.meta.env.VITE_API_BASE_URL;
 
 
 export const apiFetch = async (
@@ -65,8 +65,8 @@ export const apiFetch = async (
 
 
     // File upload
-    // Browser sets multipart/form-data
-    // automatically with boundary
+    // Browser automatically sets
+    // multipart/form-data boundary
     if (isFormData) {
 
       headers.delete(
@@ -133,7 +133,9 @@ export const apiFetch = async (
     // REFRESH SUCCESS
     // =========================
 
-    if (refreshResponse.ok) {
+    if (
+      refreshResponse.ok
+    ) {
 
       const refreshData =
         await refreshResponse.json();

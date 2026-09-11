@@ -357,6 +357,7 @@ const BranchDashboard = ({
                                 schedule.staff_full_name
                               }
                             </span>
+                            <span> </span>
 
                             <span>
                               {formatTime(

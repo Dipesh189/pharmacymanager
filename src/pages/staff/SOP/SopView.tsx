@@ -14,8 +14,6 @@ import {
   pdfjs,
 } from "react-pdf";
 
-import pdfWorker from "pdfjs-dist/build/pdf.worker.min.mjs?url";
-
 import { apiFetch } from "../../../services/stafftimesheet";
 
 import SignaturePad from "../../../components/SignaturePad/SignaturePad";
@@ -23,8 +21,25 @@ import SignaturePad from "../../../components/SignaturePad/SignaturePad";
 import styles from "./SopView.module.css";
 
 
+// =========================
+// PDF WORKER
+// =========================
+
+const pdfWorkerUrl =
+  new URL(
+    "pdfjs-dist/build/pdf.worker.min.mjs",
+    import.meta.url
+  );
+
+
+pdfWorkerUrl.searchParams.set(
+  "v",
+  "2"
+);
+
+
 pdfjs.GlobalWorkerOptions.workerSrc =
-  pdfWorker;
+  pdfWorkerUrl.toString();
 
 
 type SopRecord = {
@@ -34,8 +49,8 @@ type SopRecord = {
 };
 
 
-const DJANGO_URL =
-  "http://127.0.0.1:8000";
+const MEDIA_BASE_URL =
+  import.meta.env.VITE_MEDIA_BASE_URL || "";
 
 
 const SopView = () => {
@@ -47,29 +62,54 @@ const SopView = () => {
     useNavigate();
 
 
-  const [sop, setSop] =
-    useState<SopRecord | null>(null);
+  const [
+    sop,
+    setSop,
+  ] = useState<SopRecord | null>(
+    null
+  );
 
-  const [pdfUrl, setPdfUrl] =
-    useState("");
 
-  const [numPages, setNumPages] =
-    useState(0);
+  const [
+    pdfUrl,
+    setPdfUrl,
+  ] = useState("");
 
-  const [signature, setSignature] =
-    useState<unknown[]>([]);
 
-  const [isLoading, setIsLoading] =
-    useState(false);
+  const [
+    numPages,
+    setNumPages,
+  ] = useState(0);
 
-  const [isSaving, setIsSaving] =
-    useState(false);
 
-  const [error, setError] =
-    useState("");
+  const [
+    signature,
+    setSignature,
+  ] = useState<unknown[]>([]);
 
-  const [success, setSuccess] =
-    useState("");
+
+  const [
+    isLoading,
+    setIsLoading,
+  ] = useState(false);
+
+
+  const [
+    isSaving,
+    setIsSaving,
+  ] = useState(false);
+
+
+  const [
+    error,
+    setError,
+  ] = useState("");
+
+
+  const [
+    success,
+    setSuccess,
+  ] = useState("");
 
 
   // =========================
@@ -86,7 +126,12 @@ const SopView = () => {
     const fetchSop = async () => {
 
       setIsLoading(true);
+
       setError("");
+
+      setPdfUrl("");
+
+      setNumPages(0);
 
 
       try {
@@ -114,8 +159,9 @@ const SopView = () => {
         }
 
 
-        const sopData: SopRecord =
-          data.data;
+        const sopData:
+          SopRecord =
+            data.data;
 
 
         setSop(
@@ -133,12 +179,27 @@ const SopView = () => {
         }
 
 
+        // =========================
+        // BUILD PDF URL
+        // =========================
+
         const fullPdfUrl =
           sopData.file.startsWith(
-            "http"
+            "http://"
+          ) ||
+          sopData.file.startsWith(
+            "https://"
           )
+
             ? sopData.file
-            : `${DJANGO_URL}${sopData.file}`;
+
+            : `${MEDIA_BASE_URL}${sopData.file}`;
+
+
+        console.log(
+          "PDF URL:",
+          fullPdfUrl
+        );
 
 
         setPdfUrl(
@@ -191,6 +252,27 @@ const SopView = () => {
 
 
   // =========================
+  // PDF LOAD ERROR
+  // =========================
+
+  const handlePdfLoadError = (
+    pdfError: Error
+  ) => {
+
+    console.error(
+      "PDF LOAD ERROR:",
+      pdfError
+    );
+
+
+    setError(
+      `Failed to load PDF: ${pdfError.message}`
+    );
+
+  };
+
+
+  // =========================
   // SIGNATURE CHANGE
   // =========================
 
@@ -202,8 +284,9 @@ const SopView = () => {
       data
     );
 
-    // Clear old messages
+
     setError("");
+
     setSuccess("");
 
   };
@@ -255,8 +338,7 @@ const SopView = () => {
             method: "POST",
 
             body: JSON.stringify({
-              signature:
-                signature,
+              signature,
             }),
           }
         );
@@ -363,11 +445,8 @@ const SopView = () => {
           className={
             styles.backButton
           }
-          onClick={
-            () =>
-              navigate(
-                "/staff/sop"
-              )
+          onClick={() =>
+            navigate(-1)
           }
         >
           Back to SOPs
@@ -380,34 +459,38 @@ const SopView = () => {
           ERROR
          ========================= */}
 
-      {error && (
+      {
+        error && (
 
-        <div
-          className={
-            styles.error
-          }
-        >
-          {error}
-        </div>
+          <div
+            className={
+              styles.error
+            }
+          >
+            {error}
+          </div>
 
-      )}
+        )
+      }
 
 
       {/* =========================
           SUCCESS
          ========================= */}
 
-      {success && (
+      {
+        success && (
 
-        <div
-          className={
-            styles.success
-          }
-        >
-          {success}
-        </div>
+          <div
+            className={
+              styles.success
+            }
+          >
+            {success}
+          </div>
 
-      )}
+        )
+      }
 
 
       {/* =========================
@@ -431,19 +514,7 @@ const SopView = () => {
                 handlePdfLoadSuccess
               }
               onLoadError={
-                (error) => {
-
-                  console.error(
-                    "PDF LOAD ERROR:",
-                    error
-                  );
-
-
-                  setError(
-                    `Failed to load PDF: ${error.message}`
-                  );
-
-                }
+                handlePdfLoadError
               }
               loading={
                 <div
@@ -463,7 +534,10 @@ const SopView = () => {
                       numPages,
                   },
 
-                  (_, index) => (
+                  (
+                    _,
+                    index
+                  ) => (
 
                     <Page
                       key={
@@ -494,13 +568,17 @@ const SopView = () => {
 
           ) : (
 
-            <div
-              className={
-                styles.message
-              }
-            >
-              No PDF available.
-            </div>
+            !error && (
+
+              <div
+                className={
+                  styles.message
+                }
+              >
+                No PDF available.
+              </div>
+
+            )
 
           )
         }

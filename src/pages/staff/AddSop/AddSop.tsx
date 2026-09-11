@@ -251,6 +251,14 @@ const AddSop = () => {
     Array.from(files).forEach(
       (file) => {
 
+        console.log(
+          "Uploading:",
+          file.name,
+          file.size,
+          file.type
+        );
+
+
         formData.append(
           "sop_files",
           file
@@ -276,20 +284,135 @@ const AddSop = () => {
         );
 
 
-      const data =
-        await response.json();
+      console.log(
+        "UPLOAD STATUS:",
+        response.status
+      );
+
+
+      const responseText =
+        await response.text();
+
+
+      console.log(
+        "UPLOAD RESPONSE:",
+        responseText
+      );
+
+
+      let data:
+        Record<string, any> = {};
+
+
+      if (responseText) {
+
+        try {
+
+          data =
+            JSON.parse(
+              responseText
+            );
+
+        } catch {
+
+          console.error(
+            "Upload response is not JSON:",
+            responseText
+          );
+
+        }
+
+      }
 
 
       if (!response.ok) {
 
+        console.error(
+          "SOP UPLOAD FAILED:",
+          {
+            status:
+              response.status,
+
+            statusText:
+              response.statusText,
+
+            response:
+              data,
+          }
+        );
+
+
+        if (
+          response.status === 401
+        ) {
+
+          setError(
+            "Your login session has expired. Please log in again."
+          );
+
+          return;
+
+        }
+
+
+        if (
+          response.status === 413
+        ) {
+
+          setError(
+            "The SOP file is too large."
+          );
+
+          return;
+
+        }
+
+
+        if (
+          response.status === 400
+        ) {
+
+          setError(
+            data.detail ||
+            data.error ||
+            "The SOP file could not be uploaded. Please check the file."
+          );
+
+          return;
+
+        }
+
+
+        if (
+          response.status >= 500
+        ) {
+
+          setError(
+            data.detail ||
+            data.error ||
+            "Server error while uploading SOP."
+          );
+
+          return;
+
+        }
+
+
         setError(
           data.detail ||
-          "Unable to upload SOP."
+          data.error ||
+          `Unable to upload SOP. Server returned ${response.status}.`
         );
 
         return;
 
       }
+
+
+      console.log(
+        "SOP UPLOAD SUCCESS:",
+        data
+      );
 
 
       await fetchSops();
@@ -303,9 +426,21 @@ const AddSop = () => {
       );
 
 
-      setError(
-        "Unable to upload SOP."
-      );
+      if (
+        error instanceof Error
+      ) {
+
+        setError(
+          `Unable to upload SOP: ${error.message}`
+        );
+
+      } else {
+
+        setError(
+          "Unable to upload SOP."
+        );
+
+      }
 
 
     } finally {

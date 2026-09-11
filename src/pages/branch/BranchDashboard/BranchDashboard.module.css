@@ -327,6 +327,7 @@
     font-size: var(--font-sm);
 
     overflow-wrap: anywhere;
+    margin: var(--space-1);
 }
 
 

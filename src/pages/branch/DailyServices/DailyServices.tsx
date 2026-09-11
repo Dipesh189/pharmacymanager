@@ -23,7 +23,10 @@ type DailyServicesForm = {
   NMS_Intervention: InputValue;
   NMS_Follow_Ups: InputValue;
   Extra_Blood_Pressure: InputValue;
+  Extra_ABPM: InputValue;
+  Extra_DMS: InputValue;
   Extra_Minor_Illness: InputValue;
+  Extra_Urgent_Supply: InputValue;
   Extra_Pharmacy_First: InputValue;
   Extra_Contraception: InputValue;
   Extra_MenB_Vaccine: InputValue;
@@ -94,12 +97,24 @@ const dailyServiceFormNames: DailyServiceField[] = [
     label: "Blood Pressure",
   },
   {
+    name: "Extra_ABPM",
+    label: "ABPM - 24hr Blood Pressure",
+  },
+  {
+    name: "Extra_DMS",
+    label: "Discharge Medicines Service",
+  },
+  {
     name: "Extra_Minor_Illness",
     label: "Minor Illness",
   },
   {
     name: "Extra_Pharmacy_First",
     label: "Pharmacy First",
+  },
+  {
+    name: "Extra_Urgent_Supply",
+    label: "Urgent Supply",
   },
   {
     name: "Extra_Contraception",
@@ -148,10 +163,13 @@ const initialFormData: DailyServicesForm = {
   NMS_Intervention: 0,
   NMS_Follow_Ups: 0,
   Extra_Blood_Pressure: 0,
+  Extra_ABPM:0,
+  Extra_DMS:0,
   Extra_Minor_Illness: 0,
   Extra_Pharmacy_First: 0,
   Extra_Contraception: 0,
   Extra_MenB_Vaccine: 0,
+  Extra_Urgent_Supply:0,
   Extra_Covid_Vaccine: 0,
   Extra_Travel_Vaccine: 0,
   Extra_WeightLoss_Consultation: 0,

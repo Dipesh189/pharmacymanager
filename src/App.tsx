@@ -22,6 +22,8 @@ import BranchDashboardLayout from "./layouts/BranchDashboardLayout/BranchDashboa
 import BranchDashboard from "./pages/branch/BranchDashboard/BranchDashboard";
 
 import { branchRoutes } from "./routes/branchRoutes";
+import AdminTimeSheet from "./pages/admin/TimeSheet/TImeSheet";
+import AdminAppointment from "./pages/admin/AdminAppointment/AdminAppointment";
 
 
 type UserRole =
@@ -37,92 +39,92 @@ function App() {
   // USER ROLE
   // =========================
 
-  const [userRole, setUserRole] =
-    useState<UserRole | null>(() => {
+  const [
+    userRole,
+    setUserRole,
+  ] = useState<UserRole | null>(() => {
 
-      const accessToken =
-        localStorage.getItem(
-          "accessToken"
+    const accessToken =
+      localStorage.getItem(
+        "accessToken"
+      );
+
+    const savedUser =
+      localStorage.getItem(
+        "user"
+      );
+
+
+    if (
+      !accessToken ||
+      !savedUser
+    ) {
+      return null;
+    }
+
+
+    try {
+
+      const user =
+        JSON.parse(
+          savedUser
         );
 
-      const savedUser =
-        localStorage.getItem(
-          "user"
-        );
+      const accessLevel =
+        user.access_level
+          ?.toLowerCase();
 
 
       if (
-        !accessToken ||
-        !savedUser
+        accessLevel === "admin"
       ) {
-        return null;
+        return "admin";
       }
 
 
-      try {
-
-        const user =
-          JSON.parse(
-            savedUser
-          );
-
-
-        const accessLevel =
-          user.access_level
-            ?.toLowerCase();
-
-
-        if (
-          accessLevel === "admin"
-        ) {
-          return "admin";
-        }
-
-
-        if (
-          accessLevel === "manager"
-        ) {
-          return "manager";
-        }
-
-
-        if (
-          accessLevel === "staff"
-        ) {
-          return "staff";
-        }
-
-
-        if (
-          accessLevel === "branch"
-        ) {
-          return "branch";
-        }
-
-
-        return null;
-
-
-      } catch {
-
-        localStorage.removeItem(
-          "accessToken"
-        );
-
-        localStorage.removeItem(
-          "refreshToken"
-        );
-
-        localStorage.removeItem(
-          "user"
-        );
-
-
-        return null;
-
+      if (
+        accessLevel === "manager"
+      ) {
+        return "manager";
       }
 
-    });
+
+      if (
+        accessLevel === "staff"
+      ) {
+        return "staff";
+      }
+
+
+      if (
+        accessLevel === "branch"
+      ) {
+        return "branch";
+      }
+
+
+      return null;
+
+    } catch {
+
+      localStorage.removeItem(
+        "accessToken"
+      );
+
+      localStorage.removeItem(
+        "refreshToken"
+      );
+
+      localStorage.removeItem(
+        "user"
+      );
+
+
+      return null;
+
+    }
+
+  });
 
 
   // =========================
@@ -201,7 +203,7 @@ function App() {
 
 
         {/* =========================
-            ADMIN
+            ADMIN DASHBOARD
            ========================= */}
 
         <Route
@@ -229,6 +231,54 @@ function App() {
             )
           }
         />
+
+
+        {/* =========================
+            ADMIN TIMESHEET
+           ========================= */}
+
+        <Route
+          path="/admin/time-sheet"
+          element={
+            userRole === "admin" ? (
+
+              <AdminDashboardLayout
+                onLogout={
+                  handleLogout
+                }
+              >
+
+                <AdminTimeSheet />
+
+              </AdminDashboardLayout>
+
+            ) : (
+
+              <Navigate
+                to="/login"
+                replace
+              />
+
+            )
+          }
+        />
+        <Route
+  path="/admin/appointments"
+  element={
+    userRole === "admin" ? (
+      <AdminDashboardLayout
+        onLogout={handleLogout}
+      >
+        <AdminAppointment />
+      </AdminDashboardLayout>
+    ) : (
+      <Navigate
+        to="/login"
+        replace
+      />
+    )
+  }
+/>
 
 
         {/* =========================

@@ -19,48 +19,80 @@ type LoginProps = {
 };
 
 
-const Login = ({ onLoginSuccess }: LoginProps) => {
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL;
 
-  const [username, setUsername] = useState("");
 
-  const [password, setPassword] = useState("");
+const Login = ({
+  onLoginSuccess,
+}: LoginProps) => {
 
-  const [error, setError] = useState("");
+  const [
+    username,
+    setUsername,
+  ] = useState("");
 
-  const [isLoading, setIsLoading] = useState(false);
 
+  const [
+    password,
+    setPassword,
+  ] = useState("");
+
+
+  const [
+    error,
+    setError,
+  ] = useState("");
+
+
+  const [
+    isLoading,
+    setIsLoading,
+  ] = useState(false);
+
+
+  // =========================
+  // SUBMIT LOGIN
+  // =========================
 
   const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
+    event:
+      React.FormEvent<HTMLFormElement>
   ) => {
 
     event.preventDefault();
 
+
     setError("");
 
-    setIsLoading(true);
+    setIsLoading(
+      true
+    );
 
 
     try {
 
-      const response = await fetch(
-        "http://127.0.0.1:8000/data_makans/login/",
-        {
-          method: "POST",
+      const response =
+        await fetch(
+          `${API_BASE_URL}/login/`,
+          {
+            method: "POST",
 
-          headers: {
-            "Content-Type": "application/json",
-          },
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
 
-          body: JSON.stringify({
-            username,
-            password,
-          }),
-        }
-      );
+            body: JSON.stringify({
+              username,
+              password,
+            }),
+          }
+        );
 
 
-      const data = await response.json();
+      const data =
+        await response.json();
 
 
       // =========================
@@ -75,6 +107,46 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
         );
 
         return;
+
+      }
+
+
+      // =========================
+      // GET ACCESS LEVEL
+      // =========================
+
+      const accessLevel =
+        data.user
+          ?.access_level
+          ?.toLowerCase();
+
+
+      const validRoles:
+        UserRole[] = [
+          "admin",
+          "manager",
+          "staff",
+          "branch",
+        ];
+
+
+      // =========================
+      // INVALID ACCESS LEVEL
+      // =========================
+
+      if (
+        !accessLevel ||
+        !validRoles.includes(
+          accessLevel as UserRole
+        )
+      ) {
+
+        setError(
+          "Your account does not have a valid access level."
+        );
+
+        return;
+
       }
 
 
@@ -100,73 +172,18 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
 
       localStorage.setItem(
         "user",
-        JSON.stringify(data.user)
+        JSON.stringify(
+          data.user
+        )
       );
 
 
       // =========================
-      // GET ACCESS LEVEL
+      // LOGIN SUCCESS
       // =========================
 
-      const accessLevel =
-        data.user.access_level
-          ?.toLowerCase();
-
-
-      // =========================
-      // ADMIN
-      // =========================
-
-      if (accessLevel === "admin") {
-
-        onLoginSuccess("admin");
-
-        return;
-      }
-
-
-      // =========================
-      // MANAGER
-      // =========================
-
-      if (accessLevel === "manager") {
-
-        onLoginSuccess("manager");
-
-        return;
-      }
-
-
-      // =========================
-      // STAFF
-      // =========================
-
-      if (accessLevel === "staff") {
-
-        onLoginSuccess("staff");
-
-        return;
-      }
-
-
-      // =========================
-      // BRANCH
-      // =========================
-
-      if (accessLevel === "branch") {
-
-        onLoginSuccess("branch");
-
-        return;
-      }
-
-
-      // =========================
-      // INVALID ACCESS LEVEL
-      // =========================
-
-      setError(
-        "Your account does not have a valid access level."
+      onLoginSuccess(
+        accessLevel as UserRole
       );
 
 
@@ -185,7 +202,9 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
 
     } finally {
 
-      setIsLoading(false);
+      setIsLoading(
+        false
+      );
 
     }
 
@@ -199,19 +218,24 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
           LOADING SCREEN
          ========================= */}
 
-      {isLoading && (
-        <LoadingScreen />
-      )}
+      {
+        isLoading && (
+          <LoadingScreen />
+        )
+      }
 
 
       {/* =========================
           LOGIN PAGE
          ========================= */}
 
-      <main className={styles.loginPage}>
+      <main
+        className={
+          styles.loginPage
+        }
+      >
 
-
-        {/* Top Wave */}
+        {/* TOP WAVE */}
 
         <div
           className={`
@@ -221,7 +245,7 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
         />
 
 
-        {/* Bottom Wave */}
+        {/* BOTTOM WAVE */}
 
         <div
           className={`
@@ -235,20 +259,32 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
             LOGIN CARD
            ========================= */}
 
-        <section className={styles.loginCard}>
-
+        <section
+          className={
+            styles.loginCard
+          }
+        >
 
           {/* =========================
               BRAND
              ========================= */}
 
-          <div className={styles.loginBrand}>
+          <div
+            className={
+              styles.loginBrand
+            }
+          >
 
-
-            <div className={styles.loginLogo}>
+            <div
+              className={
+                styles.loginLogo
+              }
+            >
 
               <img
-                src={image}
+                src={
+                  image
+                }
                 alt="Makans Ltd Logo"
               />
 
@@ -264,7 +300,6 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
               Sign in to access your dashboard
             </p>
 
-
           </div>
 
 
@@ -273,17 +308,27 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
              ========================= */}
 
           <form
-            className={styles.loginForm}
-            onSubmit={handleSubmit}
+            className={
+              styles.loginForm
+            }
+            onSubmit={
+              handleSubmit
+            }
           >
 
+            {/* =========================
+                USERNAME
+               ========================= */}
 
-            {/* Username */}
+            <div
+              className={
+                styles.formGroup
+              }
+            >
 
-            <div className={styles.formGroup}>
-
-
-              <label htmlFor="username">
+              <label
+                htmlFor="username"
+              >
                 Username
               </label>
 
@@ -294,29 +339,42 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
                 type="text"
                 placeholder="Enter username"
 
-                value={username}
+                value={
+                  username
+                }
 
-                onChange={(event) =>
-                  setUsername(
-                    event.target.value
-                  )
+                onChange={
+                  (event) =>
+                    setUsername(
+                      event.target.value
+                    )
                 }
 
                 autoComplete="username"
 
+                disabled={
+                  isLoading
+                }
+
                 required
               />
-
 
             </div>
 
 
-            {/* Password */}
+            {/* =========================
+                PASSWORD
+               ========================= */}
 
-            <div className={styles.formGroup}>
+            <div
+              className={
+                styles.formGroup
+              }
+            >
 
-
-              <label htmlFor="password">
+              <label
+                htmlFor="password"
+              >
                 Password
               </label>
 
@@ -327,38 +385,46 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
                 type="password"
                 placeholder="Enter password"
 
-                value={password}
+                value={
+                  password
+                }
 
-                onChange={(event) =>
-                  setPassword(
-                    event.target.value
-                  )
+                onChange={
+                  (event) =>
+                    setPassword(
+                      event.target.value
+                    )
                 }
 
                 autoComplete="current-password"
 
+                disabled={
+                  isLoading
+                }
+
                 required
               />
-
 
             </div>
 
 
             {/* =========================
-                ERROR MESSAGE
+                ERROR
                ========================= */}
 
-            {error && (
+            {
+              error && (
 
-              <div
-                className={
-                  styles.errorMessage
-                }
-              >
-                {error}
-              </div>
+                <div
+                  className={
+                    styles.errorMessage
+                  }
+                >
+                  {error}
+                </div>
 
-            )}
+              )
+            }
 
 
             {/* =========================
@@ -371,7 +437,6 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
               }
             >
 
-
               <label
                 className={
                   styles.rememberMe
@@ -380,6 +445,9 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
 
                 <input
                   type="checkbox"
+                  disabled={
+                    isLoading
+                  }
                 />
 
                 <span>
@@ -391,14 +459,12 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
 
               <a
                 href="/forgot-password"
-
                 className={
                   styles.forgotPassword
                 }
               >
                 Forgot password?
               </a>
-
 
             </div>
 
@@ -409,16 +475,21 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
 
             <button
               type="submit"
-
               className={
                 styles.loginButton
               }
-
-              disabled={isLoading}
+              disabled={
+                isLoading
+              }
             >
-              Login
-            </button>
 
+              {
+                isLoading
+                  ? "Signing in..."
+                  : "Login"
+              }
+
+            </button>
 
           </form>
 
@@ -432,12 +503,13 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
               styles.loginFooter
             }
           >
-            © {new Date().getFullYear()} Makans Ltd
+            © {
+              new Date()
+                .getFullYear()
+            } Makans Ltd
           </p>
 
-
         </section>
-
 
       </main>
 
